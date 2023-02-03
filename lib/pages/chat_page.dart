@@ -24,36 +24,37 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   late SocketService socketService;
   late AuthService authService;
 
-  List<ChatMessage> _messages = [];
+  late List<ChatMessage> _messages = [];
 
   @override
   void initState() {
-    this.chatService = Provider.of<ChatService>(context, listen: false);
-    this.socketService = Provider.of<SocketService>(context, listen: false);
-    this.authService = Provider.of<AuthService>(context, listen: false);
+    chatService = Provider.of<ChatService>(context, listen: false);
+    socketService = Provider.of<SocketService>(context, listen: false);
+    authService = Provider.of<AuthService>(context, listen: false);
 
     // Escuchar mensajes
-    this.socketService.socket.on('mensaje-persona', _escucharMensaje);
+    socketService.socket.on('mensaje-persona', _escucharMensaje);
 
     // Cargar Mensajes
-    _cargarHistorial(this.chatService.usuarioPara);
+
+    _cargarHistorial(chatService.usuarioPara);
 
     super.initState();
   }
 
   void _cargarHistorial(Usuario usuarioID) async {
-    List<Mensaje> chat = await this.chatService.getChat(usuarioID.uid);
+    List<Mensaje> chat = await chatService.getChat(usuarioID.uid);
 
     final history = chat.map((m) => ChatMessage(
           texto: m.mensaje,
           uid: m.de,
           animationController: AnimationController(
-              vsync: this, duration: Duration(milliseconds: 300))
+              vsync: this, duration: const Duration(milliseconds: 300))
             ..forward(),
         ));
 
     setState(() {
-      this._messages.insertAll(0, history);
+      _messages.insertAll(0, history);
     });
   }
 
@@ -62,10 +63,10 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       uid: payload['de'],
       texto: payload['mensaje'],
       animationController: AnimationController(
-          vsync: this, duration: Duration(milliseconds: 300)),
+          vsync: this, duration: const Duration(milliseconds: 300)),
     );
     setState(() {
-      this._messages.insert(0, message);
+      _messages.insert(0, message);
       // Actualizar el controlador para que se vean los cambios
       message.animationController.forward();
     });
@@ -73,8 +74,9 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final usuarioPara = this.chatService.usuarioPara;
+    final usuarioPara = chatService.usuarioPara;
     final String nombreUsuario =
+        // ignore: unnecessary_null_comparison
         (usuarioPara == null ? "" : usuarioPara.nombre);
 
     return Scaffold(
@@ -193,8 +195,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
       // Envío mensaje al socket service
       socketService.emit('mensaje-personal', {
-        'de': this.authService.usuario.uid,
-        'para': this.chatService.usuarioPara.uid,
+        'de': authService.usuario.uid,
+        'para': chatService.usuarioPara.uid,
         'mensaje': texto.trim()
       });
     }
@@ -210,7 +212,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       message.animationController.dispose();
     }
     // Desconectar socket de mensajes
-    this.socketService.socket.off('mensaje-personal');
+    socketService.socket.off('mensaje-personal');
     super.dispose();
   }
 }

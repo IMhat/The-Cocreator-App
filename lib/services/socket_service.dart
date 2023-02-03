@@ -4,47 +4,39 @@ import 'package:flutter/material.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-enum ServerStatus {
-  Online,
-  Offline,
-  Connecting
-}
+enum ServerStatus { online, offline, connecting }
 
 class SocketService with ChangeNotifier {
-
-  ServerStatus _serverStatus = ServerStatus.Connecting;
+  ServerStatus _serverStatus = ServerStatus.connecting;
   late IO.Socket _socket;
 
-  ServerStatus get serverStatus => this._serverStatus;
-  
-  IO.Socket get socket => this._socket;
-  Function get emit => this._socket.emit;
+  ServerStatus get serverStatus => _serverStatus;
+
+  IO.Socket get socket => _socket;
+  Function get emit => _socket.emit;
 
   void connect() async {
-
     final token = await AuthService.getToken();
 
-    this._socket = IO.io(Environment.socketUrl, {
+    _socket = IO.io(Environment.socketUrl, {
       'transports': ['websocket'],
       'autoConnect': true,
       'forceNew': true,
-      'extraHeaders': {
-        'x-token': token
-      }
+      'extraHeaders': {'x-token': token}
     });
 
-    this._socket.on('connect', (_) {
-      this._serverStatus = ServerStatus.Online;
+    _socket.on('connect', (_) {
+      _serverStatus = ServerStatus.online;
       notifyListeners();
     });
 
-    this._socket.on('disconnect', (_) {
-      this._serverStatus = ServerStatus.Offline;
+    _socket.on('disconnect', (_) {
+      _serverStatus = ServerStatus.offline;
       notifyListeners();
     });
   }
 
   void disconnect() {
-    this._socket.disconnect();
+    _socket.disconnect();
   }
 }

@@ -55,7 +55,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
         actions: [
           Container(
             margin: EdgeInsets.only(right: 25),
-            child: (socketService.serverStatus == ServerStatus.Online)
+            child: (socketService.serverStatus == ServerStatus.online)
                 ? Icon(Icons.check_circle, color: Colors.green)
                 : Icon(Icons.offline_bolt, color: Colors.red),
           )
@@ -101,6 +101,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
         final chatService = Provider.of<ChatService>(context, listen: false);
         chatService.usuarioPara = usuario;
         // Navigator.pushNamed(context, 'chat');
+        // navegarPagina(context, ChatPage());
         PersistentNavBarNavigator.pushNewScreen(context,
             withNavBar: false,
             screen: ChatPage(),
