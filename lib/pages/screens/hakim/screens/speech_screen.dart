@@ -4,7 +4,7 @@ import 'package:cocreator/pages/screens/hakim/controllers/api_services.dart';
 import 'package:cocreator/pages/screens/hakim/controllers/tts.dart';
 import 'package:cocreator/pages/screens/hakim/models/chat_model.dart';
 import 'package:cocreator/pages/screens/hakim/widget/chat_bubble.dart';
-
+import 'package:alan_voice/alan_voice.dart';
 import 'package:flutter/material.dart';
 
 import 'package:speech_to_text/speech_to_text.dart';
@@ -83,7 +83,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
               });
 
               Future.delayed(const Duration(milliseconds: 500), () {
-                TextToSpeech.speak(msg);
+                AlanVoice.activate();
+                AlanVoice.playText(msg);
               });
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

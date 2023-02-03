@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-String apiKey = "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";
+String apiKey = "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";
 //String apiKey = "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";
 
 class ApiServices {

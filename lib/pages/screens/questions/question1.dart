@@ -3,6 +3,7 @@ import 'package:cocreator/pages/screens/questions/widgets/big_text_black.dart';
 import 'package:cocreator/pages/screens/questions/widgets/small_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:alan_voice/alan_voice.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +20,8 @@ class Question1Screen extends StatefulWidget {
 }
 
 class _Question1ScreenState extends State<Question1Screen> {
+  bool _greetingIsPlayed = false;
+
   void _storeOnboardInfo() async {
     print("Shared pref called");
     int isViewed = 0;
@@ -27,10 +30,21 @@ class _Question1ScreenState extends State<Question1Screen> {
     print(prefs.getInt('onBoard'));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    talk();
+  _Question1ScreenState() {
+    AlanVoice.addButton("0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+
+    AlanVoice.onButtonState.add((state) {
+      if (state.name == "ONLINE" && !_greetingIsPlayed) {
+        _greetingIsPlayed = true;
+        AlanVoice.activate();
+        AlanVoice.playText("Next, select a financial services account, this will help you better manage your income and expenses, as well as keep in touch with your financial service. We do not use any information you have provided");
+      }
+      
+       });
+  //@override
+  //void initState() {
+    //super.initState();
+    //talk();
   }
 
   String msg =

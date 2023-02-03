@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:alan_voice/alan_voice.dart';
 import '../hakim/controllers/tts.dart';
 import 'widgets/button_gradient.dart';
 
@@ -18,6 +18,8 @@ class Question2_2Screen extends StatefulWidget {
 }
 
 class _Question2_2ScreenState extends State<Question2_2Screen> {
+  bool _greetingIsPlayed = false;
+
   final _businessQuestion1FormKey = GlobalKey<FormState>();
 
   final TextEditingController _nameCompanyController = TextEditingController();
@@ -32,10 +34,21 @@ class _Question2_2ScreenState extends State<Question2_2Screen> {
     print(prefs.getInt('onBoard'));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    talk();
+  _Question2_2ScreenState() {
+    AlanVoice.addButton("0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+
+    AlanVoice.onButtonState.add((state) {
+      if (state.name == "ONLINE" && !_greetingIsPlayed) {
+        _greetingIsPlayed = true;
+        AlanVoice.activate();
+        AlanVoice.playText("Answer questions about your business");
+      }
+      
+       });
+  //@override
+  //void initState() {
+    //super.initState();
+    //talk();
   }
 
   String msg = "Answer questions about your business";

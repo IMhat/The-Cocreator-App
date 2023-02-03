@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:alan_voice/alan_voice.dart';
 
 import '../hakim/controllers/tts.dart';
 import 'widgets/big_text_black.dart';
@@ -17,6 +18,7 @@ class Question2Screen extends StatefulWidget {
 }
 
 class _Question2ScreenState extends State<Question2Screen> {
+  bool _greetingIsPlayed = false;
   void _storeOnboardInfo() async {
     print("Shared pref called");
     int isViewed = 0;
@@ -25,10 +27,23 @@ class _Question2ScreenState extends State<Question2Screen> {
     print(prefs.getInt('onBoard'));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    talk();
+  _Question2ScreenState() {
+    AlanVoice.addButton(
+        "0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage",
+        buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+
+    AlanVoice.onButtonState.add((state) {
+      if (state.name == "ONLINE" && !_greetingIsPlayed) {
+        _greetingIsPlayed = true;
+        AlanVoice.activate();
+        AlanVoice.playText(
+            "On this screen, you will have to answer the personality test, this helps us to get to know you a little better.");
+      }
+    });
+    //@override
+    //void initState() {
+    //super.initState();
+    //talk();
   }
 
   String msg =
