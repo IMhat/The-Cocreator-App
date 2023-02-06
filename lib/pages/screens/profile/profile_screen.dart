@@ -39,9 +39,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthServices>(context);
     final usuario = authService.usuario;
-    final String nombreUsuario = (usuario == null ? "" : usuario.nombre);
+    final String nombreUsuario = (usuario == null ? "" : usuario.name);
 
     final Size size = MediaQuery.of(context).size;
     return Scaffold(

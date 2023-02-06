@@ -1,5 +1,6 @@
 import 'package:cocreator/routes/routes.dart';
 import 'package:cocreator/services/auth_service.dart';
+
 import 'package:cocreator/services/chat_service.dart';
 import 'package:cocreator/services/socket_service.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => AuthServices()),
         ChangeNotifierProvider(create: (_) => SocketService()),
         ChangeNotifierProvider(create: (_) => ChatService())
       ],

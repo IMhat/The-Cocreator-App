@@ -1,24 +1,20 @@
 import 'package:cocreator/global/environment.dart';
-import 'package:cocreator/models/usuario.dart';
+import 'package:cocreator/models/usuarios.dart';
 import 'package:cocreator/models/usuarios_response.dart';
 import 'package:cocreator/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
-class UsuariosService {
+class UsuarioService {
   Future<List<Usuario>> getUsuarios() async {
     try {
-      final uri = Uri.parse('${ Environment.apiUrl }/usuarios');
-      final resp = await http.get(uri,
-        headers: {
-          'Content-Type': 'application/json',
-          'x-token': await AuthService.getToken()
-        }
-      );
-
-      print(AuthService.getToken());
+      final resp = await http.get(Uri.parse('${Environment.apiUrl}/usuarios'),
+          headers: {
+            'Content-type': 'application/json',
+            'x-token': await AuthServices.getToken()
+          });
 
       final usuariosResponse = usuariosResponseFromJson(resp.body);
-      print(usuariosResponse.usuarios);
+
       return usuariosResponse.usuarios;
     } catch (e) {
       print(e.toString());

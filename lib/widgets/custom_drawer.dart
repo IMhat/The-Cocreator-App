@@ -1,5 +1,3 @@
-
-
 import 'package:cocreator/helpers/navegar_pagina.dart';
 import 'package:cocreator/pages/login_page.dart';
 import 'package:cocreator/services/auth_service.dart';
@@ -28,9 +26,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
     //final user = context.watch<UserProvider>().user;
     final socketService = Provider.of<SocketService>(context);
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthServices>(context);
     final usuario = authService.usuario;
-    final String nombreUsuario = (usuario == null ? "" : usuario.nombre);
+    final String nombreUsuario = (usuario == null ? "" : usuario.name);
 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -169,7 +167,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     screen: LoginPage(),
                     pageTransitionAnimation:
                         PageTransitionAnimation.slideRight);
-                AuthService.deleteToken();
+                AuthServices.deleteToken();
               }),
               icon: const Icon(
                 Icons.logout,

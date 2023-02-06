@@ -27,7 +27,7 @@ class AccountServices {
           Uri.parse('${Environment.apiUrl}/usuarios/onboardin/get-accounts'),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
-            'x-token': await AuthService.getToken()
+            'x-token': await AuthServices.getToken()
           });
 
       httpErrorHandle(
@@ -63,7 +63,7 @@ class AccountServices {
               '${Environment.apiUrl}/usuarios/onboardin/get-questionPersonality'),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
-            'x-token': await AuthService.getToken()
+            'x-token': await AuthServices.getToken()
           });
 
       httpErrorHandle(

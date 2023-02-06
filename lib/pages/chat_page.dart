@@ -1,120 +1,116 @@
 import 'dart:io';
 
-import 'package:cocreator/models/mensaje.dart';
-import 'package:cocreator/models/usuario.dart';
+import 'package:cocreator/models/mensajes_response.dart';
 import 'package:cocreator/services/auth_service.dart';
-import 'package:cocreator/services/chat_service.dart';
 import 'package:cocreator/services/socket_service.dart';
-import 'package:cocreator/widgets/chat_message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../services/chat_service.dart';
+import '../widgets/chat_message.dart';
+
 class ChatPage extends StatefulWidget {
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
-  final _textController = TextEditingController();
+  final List<ChatMessage> _messages = [
+    // ChatMessage(texto: 'Hola mundo', uid: '123'),
+    // ChatMessage(texto: 'Hola mundo como estas hoy?', uid: '123'),
+    // ChatMessage(texto: 'Hola?', uid: '1234'),
+    // ChatMessage(texto: 'No muy bien tengo unasola olla arriva ', uid: '1234')
+  ];
+  final _textCtrl = TextEditingController();
   final _focusNode = FocusNode();
-
-  bool _estaEscribiendo = false;
   late ChatService chatService;
   late SocketService socketService;
-  late AuthService authService;
-
-  late List<ChatMessage> _messages = [];
-
+  late AuthServices authServices;
+  bool _estaEscribiendo = false;
   @override
   void initState() {
+    super.initState();
     chatService = Provider.of<ChatService>(context, listen: false);
     socketService = Provider.of<SocketService>(context, listen: false);
-    authService = Provider.of<AuthService>(context, listen: false);
+    authServices = Provider.of<AuthServices>(context, listen: false);
+    socketService.socket.on('mensaje-personal', _escucharMsg);
 
-    // Escuchar mensajes
-    socketService.socket.on('mensaje-persona', _escucharMensaje);
-
-    // Cargar Mensajes
-
-    _cargarHistorial(chatService.usuarioPara);
-
-    super.initState();
+    _cargarHistorial(chatService.usuarioPara.uid);
   }
 
-  void _cargarHistorial(Usuario usuarioID) async {
-    List<Mensaje> chat = await chatService.getChat(usuarioID.uid);
-
-    final history = chat.map((m) => ChatMessage(
-          texto: m.mensaje,
-          uid: m.de,
-          animationController: AnimationController(
-              vsync: this, duration: const Duration(milliseconds: 300))
-            ..forward(),
-        ));
+  void _cargarHistorial(String usuarioId) async {
+    List<Mensaje> chat = await chatService.getchat(usuarioId);
+    // ignore: unnecessary_new
+    final historia = chat.map((m) => new ChatMessage(
+        texto: m.mensaje,
+        uid: m.de,
+        animationController: AnimationController(
+            vsync: this, duration: Duration(milliseconds: 0))
+          ..forward()));
 
     setState(() {
-      _messages.insertAll(0, history);
+      _messages.insertAll(0, historia);
     });
   }
 
-  void _escucharMensaje(dynamic payload) {
+  void _escucharMsg(dynamic payload) {
+    //print('terngo mesae! $payload');
     ChatMessage message = ChatMessage(
-      uid: payload['de'],
-      texto: payload['mensaje'],
-      animationController: AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 300)),
-    );
+        texto: payload['mensaje'],
+        uid: payload['de'],
+        animationController: AnimationController(
+            vsync: this, duration: Duration(milliseconds: 300)));
+
     setState(() {
       _messages.insert(0, message);
-      // Actualizar el controlador para que se vean los cambios
-      message.animationController.forward();
     });
+
+    message.animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
+    // final chatService = Provider.of<ChatService>(context);
     final usuarioPara = chatService.usuarioPara;
-    final String nombreUsuario =
-        // ignore: unnecessary_null_comparison
-        (usuarioPara == null ? "" : usuarioPara.nombre);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Center(
-          child: Column(
-            children: [
-              CircleAvatar(
-                child: Text(nombreUsuario.substring(0, 2),
-                    style: TextStyle(fontSize: 12)),
-                backgroundColor: Colors.blue[100],
-                maxRadius: 14,
+        title: Column(
+          children: [
+            CircleAvatar(
+              child: Text(
+                usuarioPara.name.substring(0, 2),
+                style: TextStyle(fontSize: 12),
               ),
-              SizedBox(height: 3),
-              Text(nombreUsuario,
-                  style: TextStyle(color: Colors.black87, fontSize: 12))
-            ],
-          ),
+              backgroundColor: Colors.blue[100],
+              maxRadius: 14,
+            ),
+            SizedBox(
+              height: 3,
+            ),
+            Text(
+              usuarioPara.name,
+              style: TextStyle(color: Colors.black87, fontSize: 12),
+            )
+          ],
         ),
         centerTitle: true,
         elevation: 1,
-        leading: BackButton(
-          color: Colors.black,
-        ),
       ),
       body: Container(
         child: Column(
           children: [
             Flexible(
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: _messages.length,
-                itemBuilder: (_, i) => _messages[i],
-                reverse: true,
-              ),
+                child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: _messages.length,
+              itemBuilder: (_, i) => _messages[i],
+              reverse: true,
+            )),
+            Divider(
+              height: 1,
             ),
-            Divider(height: 1),
             Container(
               color: Colors.white,
               child: _inputChat(),
@@ -127,92 +123,85 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   Widget _inputChat() {
     return SafeArea(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: [
-            Flexible(
-              child: TextField(
-                controller: _textController,
-                onSubmitted: _handleSubmit,
-                onChanged: (String texto) {
-                  setState(() {
-                    if (texto.trim().length > 0) {
-                      _estaEscribiendo = true;
-                    } else {
-                      _estaEscribiendo = false;
-                    }
-                  });
-                },
-                decoration:
-                    InputDecoration.collapsed(hintText: 'Enviar Mensaje'),
-                focusNode: _focusNode,
-              ),
+        child: Container(
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        children: [
+          Flexible(
+            child: TextField(
+              controller: _textCtrl,
+              onSubmitted: _handlerSubmit,
+              onChanged: (String texto) {
+                setState(() {
+                  if (texto.trim().length > 0) {
+                    _estaEscribiendo = true;
+                  } else {
+                    _estaEscribiendo = false;
+                  }
+                });
+              },
+              decoration: InputDecoration.collapsed(hintText: "Enviar mensaje"),
+              focusNode: _focusNode,
             ),
-            // Botón de Enviar
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 4),
-                child: Platform.isIOS
-                    ? CupertinoButton(
-                        child: Text('Enviar'),
-                        onPressed: () => _estaEscribiendo
-                            ? _handleSubmit(_textController.text.trim())
-                            : null)
-                    : Container(
-                        margin: EdgeInsets.symmetric(horizontal: 4),
-                        // El IconTheme es para que se deshabilite el botón cuando quieras enviar algo vacío
-                        child: IconTheme(
-                          data: IconThemeData(color: Colors.blue[400]),
-                          child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(Icons.send),
-                              onPressed: () => _estaEscribiendo
-                                  ? _handleSubmit(_textController.text.trim())
-                                  : null),
-                        ),
-                      ))
-          ],
-        ),
+          ),
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              child: Platform.isIOS
+                  ? CupertinoButton(
+                      child: Text('Enviar'),
+                      onPressed: _estaEscribiendo
+                          ? () => _handlerSubmit(_textCtrl.text.trim())
+                          : null)
+                  : Container(
+                      margin: EdgeInsets.symmetric(horizontal: 4.0),
+                      child: IconTheme(
+                        data: IconThemeData(color: Colors.blue[400]),
+                        child: IconButton(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            icon: Icon(Icons.send),
+                            onPressed: _estaEscribiendo
+                                ? () => _handlerSubmit(_textCtrl.text.trim())
+                                : null),
+                      ),
+                    ))
+        ],
       ),
-    );
+    ));
   }
 
-  _handleSubmit(String texto) {
-    // if(_textController.text.trim() != '') print(texto);
-    _textController.clear();
+  _handlerSubmit(String texto) {
+    if (texto.length == 0) {
+      return;
+    }
+    //print(texto);
+    _textCtrl.clear();
     _focusNode.requestFocus();
 
-    if (texto.trim() != '') {
-      ChatMessage newMessage = ChatMessage(
-        uid: authService.usuario.uid.toString(),
-        texto: texto.trim(),
+    final newMessage = new ChatMessage(
+        texto: texto,
+        uid: authServices.usuario.uid,
         animationController: AnimationController(
-            vsync: this, duration: Duration(milliseconds: 400)),
-      );
-      _messages.insert(0, newMessage);
-      newMessage.animationController.forward();
+            vsync: this, duration: Duration(milliseconds: 200)));
+    _messages.insert(0, newMessage);
+    newMessage.animationController.forward();
+    setState(() {
+      _estaEscribiendo = false;
+    });
 
-      // Envío mensaje al socket service
-      socketService.emit('mensaje-personal', {
-        'de': authService.usuario.uid,
-        'para': chatService.usuarioPara.uid,
-        'mensaje': texto.trim()
-      });
-    }
-
-    setState(() => _estaEscribiendo = false);
+    this.socketService.emit('mensaje-personal', {
+      'de': this.authServices.usuario.uid,
+      'para': this.chatService.usuarioPara.uid,
+      'mensaje': texto
+    });
   }
 
   @override
   void dispose() {
-    // TODO: cerrar los sockets
     for (ChatMessage message in _messages) {
-      // Cierro todas las animaciones
       message.animationController.dispose();
     }
-    // Desconectar socket de mensajes
-    socketService.socket.off('mensaje-personal');
+    this.socketService.socket.off('mensaje-personal');
     super.dispose();
   }
 }

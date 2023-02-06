@@ -194,7 +194,7 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthServices>(context);
     final socketService = Provider.of<SocketService>(context);
 
     bool verificarCamposNoNulos() {

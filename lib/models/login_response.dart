@@ -1,30 +1,41 @@
-import 'dart:convert';
-import 'package:cocreator/models/usuario.dart';
+// To parse this JSON data, do
+//
+//    final loginResponse = loginResponseFromJson(jsonString);
 
-LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.decode(str));
+import 'dart:convert';
+
+import 'package:cocreator/models/usuarios.dart';
+
+LoginResponse loginResponseFromJson(String str) =>
+    LoginResponse.fromJson(json.decode(str));
 
 String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
-    LoginResponse({
-        required this.ok,
-        required this.usuario,
-        required this.token,
-    });
+  LoginResponse({
+    required this.ok,
+    required this.msg,
+    required this.usuario,
+    required this.token,
+  });
 
-    bool ok;
-    Usuario usuario;
-    String token;
+  bool ok;
+  String msg;
+  Usuario usuario;
+  String token;
 
-    factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
+  factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
+        //TODO arreglar el json de usuario a usuario
         ok: json["ok"],
+        msg: json["msg"],
         usuario: Usuario.fromJson(json["usuario"]),
         token: json["token"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "ok": ok,
+        "msg": msg,
         "usuario": usuario.toJson(),
         "token": token,
-    };
+      };
 }

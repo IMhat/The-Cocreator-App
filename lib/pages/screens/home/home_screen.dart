@@ -182,10 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     //final user = context.watch<UserProvider>().user;
 
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthServices>(context);
 
     final usuario = authService.usuario;
-    final String nombreUsuario = (usuario == null ? "" : usuario.nombre);
+    final String nombreUsuario = (usuario == null ? "" : usuario.name);
 
     return Scaffold(
         drawer: const Drawer(
