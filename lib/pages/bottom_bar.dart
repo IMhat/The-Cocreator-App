@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
+import 'screens/socialmedia/socialmedia.dart';
 import 'screens/cashflow/cash_flow_screen.dart';
 import 'screens/hakim/screens/speech_screen.dart';
 import 'screens/home/home_screen.dart';
@@ -55,7 +55,7 @@ class _BottomBarState extends State<BottomBar> {
     List<Widget> _buildScreens() {
       return [
         const HomeScreen(),
-        const HomeScreen(),
+        const SocialScreen(),
         //const SocialScreen(),
         const CashFlowScreen(),
         UsuariosPage(),
