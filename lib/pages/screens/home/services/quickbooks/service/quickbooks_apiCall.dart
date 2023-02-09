@@ -6,6 +6,7 @@ import 'package:cocreator/global/environment.dart';
 import 'package:cocreator/helpers/constants/error_handling.dart';
 import 'package:cocreator/helpers/constants/utils.dart';
 import 'package:cocreator/pages/screens/home/services/quickbooks/models/balance.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/models/transaction.dart';
 import 'package:cocreator/pages/screens/home/services/quickbooks/service/auth_quickbooks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -57,6 +58,41 @@ class QuickbookService with ChangeNotifier {
       showSnackBar(context, e.toString());
     }
     return balance;
+  }
+
+  Future<List<Transanction>> getTransaction({
+    required BuildContext context,
+  }) async {
+    //final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    List<Transanction> transaction = [];
+    try {
+      http.Response res = await http.get(
+          Uri.parse('${Environment.apiUrl}/usuarios/quickbooks/transaction'),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-token': await AuthServices.getToken()
+          });
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            transaction.add(
+              Transanction.fromJson(
+                jsonEncode(
+                  jsonDecode(res.body)[i],
+                ),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return transaction;
   }
 
   Future<Balance> getBalance2() async {

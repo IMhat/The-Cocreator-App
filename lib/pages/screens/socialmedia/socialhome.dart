@@ -1,3 +1,4 @@
+import 'package:cocreator/pages/screens/socialmedia/widgets/picker_channel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'package:cocreator/services/socket_service.dart';
 import 'package:cocreator/widgets/FloatHakeem.dart';
 import 'package:cocreator/widgets/FloatHakeem.dart';
 import 'package:cocreator/widgets/custom_drawer.dart';
-import 'widgets/card_channel.dart';
+
 import 'widgets/usercards.dart';
 
 class SocialMediaHome extends StatefulWidget {
@@ -48,161 +49,299 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
 
   @override
   Widget build(BuildContext context) {
+    final List<PickerItem> channelModes = [
+      PickerItem(
+        "Startups BOSTON",
+      ),
+      PickerItem(
+        "Crypto - LA",
+      ),
+      PickerItem(
+        "NFT 2023 - LA",
+      ),
+      PickerItem(
+        "Startups BOSTON",
+      ),
+      PickerItem(
+        "Crypto - LA",
+      ),
+      PickerItem(
+        "NFT 2023 - LA",
+      ),
+    ];
+
+    int counter = 16;
     final currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        drawer: const Drawer(
-          child: CustomDrawer(),
+      drawer: const Drawer(
+        child: CustomDrawer(),
+      ),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.black,
+                size: 35,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('Community',
-              style: GoogleFonts.sourceSansPro(
-                  fontSize: 30, color: Color.fromRGBO(255, 255, 255, 1))),
-
-          //SizedBox(width: 180, child: (Image.asset('assets/logo3.png'))),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerRight,
-                    end: Alignment.centerLeft,
-                    //     stops: [
-                    //   0.2,
-                    //   0.4,
-                    // ],
-                    colors: [
-                  Color.fromARGB(255, 143, 200, 241),
-                  // Color.fromARGB(255, 94, 129, 253),
-                  Color.fromARGB(255, 70, 106, 234)
-                ])),
+        //shadowColor: Colors.black,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: SizedBox(width: 130, child: (Image.asset('assets/logo.png'))),
+        // title: Row(
+        //   children: [
+        //     SizedBox(
+        //       width: 80,
+        //     ),
+        //     SizedBox(
+        //       child: Container(
+        //         child: Text(
+        //           "Cocreator",
+        //           style: TextStyle(
+        //               fontSize: 30,
+        //               fontWeight: FontWeight.w600,
+        //               color: Colors.black),
+        //         ),
+        //       ),
+        //     ),
+        //     SizedBox(
+        //       width: 100,
+        //     ),
+        //     SizedBox(
+        //       child: Container(
+        //         alignment: Alignment.centerLeft,
+        //         child: Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           child: Icon(
+        //             Icons.notifications,
+        //             color: Colors.black,
+        //             size: 30,
+        //           ),
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // flexibleSpace: Container(
+        //   decoration: const BoxDecoration(color: Colors.white),
+        // ),
+        actions: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                // padding: EdgeInsets.all(8.0),
+                margin: const EdgeInsets.only(top: 1, bottom: 0, right: 5),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.black,
+                      size: 35,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        counter = 1;
+                      });
+                    }),
+              ),
+              counter != 0
+                  ? Positioned(
+                      right: 11,
+                      top: 11,
+                      child: Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: new BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 14,
+                          minHeight: 14,
+                        ),
+                        child: Text(
+                          '$counter',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 8,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
           ),
-        ),
-        body: SingleChildScrollView(
-          child: SafeArea(
-              child: Column(children: [
-            const SizedBox(
-              height: 10,
+        ],
+      ),
+      body: Container(
+        color: Colors.white,
+        child: SafeArea(
+            child: Column(children: [
+          const SizedBox(
+            height: 10,
+          ),
+          _title(),
+          const SizedBox(
+            width: 55,
+          ),
+          _textChannel(),
+          Container(
+            height: 50,
+            //width: 50,
+            child: Expanded(
+              child: PickerChannel(pickerItems: channelModes),
             ),
-            _TextChannel(),
-            const SizedBox(
-              width: 25,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          _TextUsers(),
+          const SizedBox(
+            width: 25,
+          ),
+          Container(
+            height: 120,
+            //width: 50,
+            child: Expanded(
+              child: UserCard(),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            _TextUsers(),
-            const SizedBox(
-              width: 25,
-            )
-          ])),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-            elevation: 5.0,
-            onPressed: () {
-              PersistentNavBarNavigator.pushNewScreen(context,
-                  withNavBar: false,
-                  screen: SpeechScreen(),
-                  pageTransitionAnimation: PageTransitionAnimation.slideUp);
-            },
-            label: Text(
-              'Hakim',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-            ),
-            icon: FloatIaIcon()));
+          ),
+          _textPost()
+        ])),
+      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //     elevation: 5.0,
+      //     onPressed: () {
+      //       PersistentNavBarNavigator.pushNewScreen(context,
+      //           withNavBar: false,
+      //           screen: SpeechScreen(),
+      //           pageTransitionAnimation: PageTransitionAnimation.slideUp);
+      //     },
+      //     label: Text(
+      //       'Hakim',
+      //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+      //     ),
+      //     icon: FloatIaIcon()));
+    );
   }
 
-  Widget _TextChannel() {
+  Widget _title() {
     return Container(
-        width: 435,
-        height: 180,
-        //margin: EdgeInsets.symmetric(vertical: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              //padding: EdgeInsets.symmetric(vertical: 10),
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              alignment: Alignment.topCenter,
-
-              child: Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text('Channel',
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(223, 220, 218, 218))),
-                  Container(
-                      padding: const EdgeInsets.only(left: 50.0),
-                      //EdgeInsets.only(bottom: 10),
-
-                      child: TextButton(
-                          onPressed: (() {}), child: const Text('View All'))),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CardChannel(),
-                  SizedBox(
-                    width: 90,
-                  ),
-                ],
-              ),
-            ),
-          ],
+        alignment: Alignment.topCenter,
+        child: SizedBox(
+          child: Text('Community',
+              style: const TextStyle(
+                  fontSize: 33,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black)),
         ));
+  }
+
+  Widget _textChannel() {
+    return Container(
+      //width: 435,
+      //height: 180,
+      //margin: EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 25),
+        alignment: Alignment.topCenter,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const Text('Channel',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 151, 151, 151))),
+            const Text('View all',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
+
+            //CardChannel(),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _TextUsers() {
     return Container(
-        width: 435,
-        height: 250,
-        //margin: EdgeInsets.symmetric(vertical: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Column(
+      //width: 435,
+      //height: 180,
+      //margin: EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 25),
+        alignment: Alignment.topCenter,
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              //padding: EdgeInsets.symmetric(vertical: 10),
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              alignment: Alignment.topCenter,
-
-              child: Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text('Users',
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(223, 220, 218, 218))),
-                  Container(
-                      padding: const EdgeInsets.only(left: 50.0),
-                      //EdgeInsets.only(bottom: 10),
-
-                      child: TextButton(
-                          onPressed: (() {}), child: const Text('View All'))),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  UserCard(),
-                  SizedBox(
-                    width: 90,
-                  ),
-                ],
-              ),
-            ),
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const Text('Users',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 151, 151, 151))),
+            const Text('View all',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
           ],
-        ));
+        ),
+      ),
+    );
+    ;
+  }
+
+  Widget _textPost() {
+    return Container(
+      //width: 435,
+      //height: 180,
+      //margin: EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 25),
+        alignment: Alignment.topCenter,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const Text('New posts',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 151, 151, 151))),
+          ],
+        ),
+      ),
+    );
+    ;
   }
 }

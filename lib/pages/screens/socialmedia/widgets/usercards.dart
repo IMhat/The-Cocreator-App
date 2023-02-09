@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cocreator/models/usuarios.dart';
 import 'package:cocreator/models/mensajes_response.dart';
 import 'package:cocreator/pages/chat_page.dart';
-import 'package:cocreator/pages/screens/socialmedia/widgets/card_channel.dart';
+
 import 'package:cocreator/services/auth_service.dart';
 import 'package:cocreator/services/socket_service.dart';
 import 'package:cocreator/services/usuarios_service.dart';
@@ -32,53 +32,12 @@ class _UserCardState extends State<UserCard> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
-    final authServices = Provider.of<AuthServices>(context);
-    final socketServices = Provider.of<SocketService>(context);
-    final usuario = authServices.usuario;
     // final ChatService = chatService.usuarioPara;
     return Container(
-        margin: EdgeInsets.only(left: 10, top: 10, right: 20, bottom: 20),
-        width: 280,
-        height: 93,
-        //margin: EdgeInsets.symmetric(vertical: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              //padding: EdgeInsets.symmetric(vertical: 10),
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.topLeft,
-              child: Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  _usuariosListTitle(usuario),
-
-                  // Text(usuario.name, style: TextStyle(fontSize: 20)),
-                  const SizedBox(
-                    height: 8,
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+      child: _listViewUsuarios(),
+    );
   }
 
   /*
@@ -117,23 +76,178 @@ class _UserCardState extends State<UserCard> {
             borderRadius: BorderRadius.circular(100)),
       ),
       onTap: () {
-        final chatService = Provider.of<ChatService>(context, listen: false);
-        chatService.usuarioPara = usuario;
-        // Navigator.pushNamed(context, 'chat');
-        PersistentNavBarNavigator.pushNewScreen(context,
-            withNavBar: false,
-            screen: ChatPage(),
-            pageTransitionAnimation: PageTransitionAnimation.slideUp);
+        // final chatService = Provider.of<ChatService>(context, listen: false);
+        // chatService.usuarioPara = usuario;
+        // // Navigator.pushNamed(context, 'chat');
+        // PersistentNavBarNavigator.pushNewScreen(context,
+        //     withNavBar: false,
+        //     screen: ChatPage(),
+        //     pageTransitionAnimation: PageTransitionAnimation.slideUp);
       },
     );
   }
 
   ListView _listViewUsuarios() {
-    return ListView.separated(
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (_, i) => _usuariosListTitle(usuarios[i]),
-        separatorBuilder: (_, i) => Divider(),
-        itemCount: usuarios.length);
+    return ListView.builder(
+        //physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        //itemBuilder: (_, i) => _usuariosListTitle(usuarios[i]),
+        //separatorBuilder: (_, i) => Divider(),
+        itemCount: usuarios.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {},
+            // child: SingleQuestion(
+            //   question: questions![index],
+            //   isSelected: false,
+            // ),
+            child: Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                // color: Color(0xff04385f),
+                color: Colors.white,
+                border: Border.all(color: Color.fromARGB(255, 0, 0, 0)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          // Container(
+                          //   padding: const EdgeInsets.only(top: 5),
+                          //   width: 10,
+                          //   height: 10,
+                          //   decoration: BoxDecoration(
+                          //       color: const Color.fromARGB(166, 239, 41, 27),
+                          //       border: Border.all(
+                          //           color: const Color.fromARGB(255, 255, 251, 251)),
+                          //       borderRadius: BorderRadius.circular(50)),
+                          // ),
+                          Container(
+                            margin: EdgeInsets.only(left: 10, top: 0),
+                            child: CircleAvatar(
+                              radius: 35,
+                              child: Text(usuarios[index].name.substring(0, 2)),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(right: 10, top: 10),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  //width: 235,
+                                  height: 30,
+                                  child: Text(
+                                    usuarios[index].name.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        color: Color.fromARGB(255, 7, 0, 0),
+                                        fontWeight: FontWeight.bold),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Container(
+                                  //argin: EdgeInsets.symmetric(horizontal: 10),
+                                  child: SizedBox(
+                                    //width: 235,
+                                    //height: 35,
+                                    child: Text(
+                                      '@${usuarios[index].name.toString()}',
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromARGB(
+                                              255, 151, 151, 151),
+                                          fontWeight: FontWeight.bold),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  //argin: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                          child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            side: const BorderSide(
+                                                width: 2, // the thickness
+                                                color: Colors
+                                                    .blue // the color of the border
+                                                )),
+                                        onPressed: () {},
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.blue,
+                                        ),
+                                      )),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      SizedBox(
+                                          width: 100,
+                                          child: ElevatedButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Follow',
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // SizedBox(
+                          //     child: Container(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: isItemSelected
+                          //       ? const Icon(
+                          //           Icons.circle_outlined,
+                          //           size: 35,
+                          //           color: Colors.blue,
+                          //         )
+                          //       : const Icon(
+                          //           Icons.circle_outlined,
+                          //           size: 35,
+                          //           color: Color.fromARGB(
+                          //               255, 197, 197, 197),
+                          //         ),
+                          // )),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   _cargarUsuarioCard() async {

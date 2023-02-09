@@ -103,7 +103,7 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                               ),
                               Container(
                                 width: 350,
-                                height: 350,
+                                height: 370,
                                 //margin: EdgeInsets.symmetric(vertical: 20),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -119,7 +119,7 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                                         children: [
                                           Container(
                                             margin: EdgeInsets.only(
-                                                left: 20, top: 20),
+                                                left: 20, top: 10),
                                             alignment: Alignment.topLeft,
                                             child: SizedBox(
                                                 child: Text(
@@ -135,7 +135,7 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                                           // ),
                                           Container(
                                             margin: EdgeInsets.only(
-                                                right: 15, top: 20),
+                                                right: 15, top: 10),
                                             alignment: Alignment.topRight,
                                             child: SizedBox(
                                               child: Text(
@@ -152,7 +152,7 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 10,
+                                      height: 5,
                                     ),
                                     SizedBox(
                                       child: Row(
@@ -180,9 +180,9 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                                                                     151))),
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
+                                                // const SizedBox(
+                                                //   height: 5,
+                                                // ),
                                                 Container(
                                                   margin: EdgeInsets.only(
                                                       left: 20,
@@ -229,9 +229,9 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                                                                     151))),
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
+                                                // const SizedBox(
+                                                //   height: 5,
+                                                // ),
                                                 Container(
                                                   margin: EdgeInsets.only(
                                                       right: 20,
@@ -253,7 +253,7 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                                           ]),
                                     ),
                                     SizedBox(
-                                      height: 25,
+                                      height: 20,
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(left: 15),
@@ -310,6 +310,16 @@ class _BalanceQuickbooksState extends State<BalanceQuickbooks> {
                                           ),
                                         ]),
                                       ),
+                                    ),
+                                    // SizedBox(
+                                    //   height: 30,
+                                    // ),
+                                    Container(
+                                      //height: 200,
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child:
+                                          Image.asset('assets/imagesheet.png'),
                                     )
                                   ],
                                 ),

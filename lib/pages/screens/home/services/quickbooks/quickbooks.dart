@@ -7,6 +7,7 @@ import 'package:cocreator/pages/screens/home/services/quickbooks/models/balance.
 import 'package:cocreator/pages/screens/home/services/quickbooks/service/auth_quickbooks.dart';
 import 'package:cocreator/pages/screens/home/services/quickbooks/service/quickbooks_apiCall.dart';
 import 'package:cocreator/pages/screens/home/services/quickbooks/widgets/balance.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/widgets/transaction.dart';
 import 'package:cocreator/widgets/FloatHakeem.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -170,6 +171,79 @@ class _QuickbooksScreenState extends State<QuickbooksScreen> {
     return Container(child: authUrl == '' ? Loader() : _webViewLoader());
   }
 
+  Widget _transactions() {
+    return Container(
+        width: 335,
+        //height: 450,
+        margin: EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  alignment: Alignment.centerLeft,
+                  child: Text('Recent transaction',
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w900,
+                          color: Color.fromARGB(255, 27, 27, 27))),
+                ),
+                Container(
+                  //padding: EdgeInsets.symmetric(vertical: 0),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  alignment: Alignment.centerRight,
+                  child: Text('View more',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.blue)),
+                ),
+              ],
+            ),
+
+            const SizedBox(
+              child: TransactionQuickbooks(),
+            ),
+            // const SizedBox(
+            //   height: 100,
+            // ),
+            // //_ConnectButton(),
+            const SizedBox(
+              width: 25,
+            )
+
+            // ElevatedButton(
+            //   child: const Text("Quickbooks-conect"),
+            //   onPressed: () => PersistentNavBarNavigator.pushNewScreen(context,
+            //       screen: QuickbooksScreen()),
+            // ),
+            // // SizedBox(
+            // //   width: 10,
+            // // ),
+            // ElevatedButton(
+            //   child: const Text("Freshbooks-conect"),
+            //   onPressed: () => PersistentNavBarNavigator.pushNewScreen(context,
+            //       screen: QuickbooksScreen()),
+            // ),
+            // // SizedBox(
+            // //   width: 10,
+            // // ),
+            // ElevatedButton(
+            //   child: const Text("Xero-conect"),
+            //   onPressed: () => PersistentNavBarNavigator.pushNewScreen(context,
+            //       screen: QuickbooksScreen()),
+            // ),
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     int counter = 16;
@@ -316,8 +390,9 @@ class _QuickbooksScreenState extends State<QuickbooksScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                              const SizedBox(height: 50),
+                              const SizedBox(height: 20),
                               const BalanceQuickbooks(),
+                              _transactions(),
                               const SizedBox(height: 100),
                               const SizedBox(height: 10),
                               SizedBox(

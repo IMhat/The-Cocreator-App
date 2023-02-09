@@ -36,70 +36,154 @@ class _SocialScreenState extends State<SocialScreen>
   @override
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
+    int counter = 16;
     return Scaffold(
-        drawer: const Drawer(
-          child: CustomDrawer(),
+      drawer: const Drawer(
+        child: CustomDrawer(),
+      ),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.black,
+                size: 35,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          title: SizedBox(width: 180, child: (Image.asset('assets/logo3.png'))),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerRight,
-                    end: Alignment.centerLeft,
-                    //     stops: [
-                    //   0.2,
-                    //   0.4,
-                    // ],
-                    colors: [
-                  Color.fromARGB(255, 143, 200, 241),
-                  // Color.fromARGB(255, 94, 129, 253),
-                  Color.fromARGB(255, 70, 106, 234)
-                ])),
+        //shadowColor: Colors.black,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: SizedBox(width: 180, child: (Image.asset('assets/logo.png'))),
+        // title: Row(
+        //   children: [
+        //     SizedBox(
+        //       width: 80,
+        //     ),
+        //     SizedBox(
+        //       child: Container(
+        //         child: Text(
+        //           "Cocreator",
+        //           style: TextStyle(
+        //               fontSize: 30,
+        //               fontWeight: FontWeight.w600,
+        //               color: Colors.black),
+        //         ),
+        //       ),
+        //     ),
+        //     SizedBox(
+        //       width: 100,
+        //     ),
+        //     SizedBox(
+        //       child: Container(
+        //         alignment: Alignment.centerLeft,
+        //         child: Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           child: Icon(
+        //             Icons.notifications,
+        //             color: Colors.black,
+        //             size: 30,
+        //           ),
+        //         ),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // flexibleSpace: Container(
+        //   decoration: const BoxDecoration(color: Colors.white),
+        // ),
+        actions: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                // padding: EdgeInsets.all(8.0),
+                margin: const EdgeInsets.only(top: 1, bottom: 0, right: 5),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.black,
+                      size: 35,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        counter = 1;
+                      });
+                    }),
+              ),
+              counter != 0
+                  ? Positioned(
+                      right: 11,
+                      top: 11,
+                      child: Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: new BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 14,
+                          minHeight: 14,
+                        ),
+                        child: Text(
+                          '$counter',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 8,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              _TextBody(),
+              const SizedBox(
+                height: 10,
+              ),
+              _ImageBody(),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
           ),
         ),
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                _TextBody(),
-                const SizedBox(
-                  width: 25,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                _ImageBody(),
-                const SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-            elevation: 5.0,
-            onPressed: () {
-              PersistentNavBarNavigator.pushNewScreen(context,
-                  withNavBar: false,
-                  screen: SpeechScreen(),
-                  pageTransitionAnimation: PageTransitionAnimation.slideUp);
-            },
-            label: Text(
-              'Hakim',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-            ),
-            icon: FloatIaIcon()));
+      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //     elevation: 5.0,
+      //     onPressed: () {
+      //       PersistentNavBarNavigator.pushNewScreen(context,
+      //           withNavBar: false,
+      //           screen: SpeechScreen(),
+      //           pageTransitionAnimation: PageTransitionAnimation.slideUp);
+      //     },
+      //     label: Text(
+      //       'Hakim',
+      //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+      //     ),
+      //     icon: FloatIaIcon())
+    );
   }
 
   Widget _TextBody() {
     return Container(
         width: 335,
-        height: 93,
+        //height: 93,
         //margin: EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -110,21 +194,27 @@ class _SocialScreenState extends State<SocialScreen>
           children: <Widget>[
             Container(
               //padding: EdgeInsets.symmetric(vertical: 10),
-              margin: EdgeInsets.symmetric(horizontal: 60),
-              alignment: Alignment.center,
+              margin: EdgeInsets.only(left: 40),
+              //margin: EdgeInsets.only(top: 50),
+              //alignment: Alignment.center,
               child: Column(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Text('Welcome to the Community',
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 50, 174, 245))),
-                  const SizedBox(
-                    height: 8,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Welcome',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 50, 174, 245))),
                   ),
-                  const SizedBox(
-                    height: 15,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text('to the Community',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 50, 174, 245))),
                   ),
                 ],
               ),
@@ -136,7 +226,7 @@ class _SocialScreenState extends State<SocialScreen>
   Widget _ImageBody() {
     return Container(
         width: 335,
-        height: 700,
+        //height: 350,
         //margin: EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -147,33 +237,32 @@ class _SocialScreenState extends State<SocialScreen>
           children: <Widget>[
             Container(
               //padding: EdgeInsets.symmetric(vertical: 10),
-              margin: EdgeInsets.symmetric(horizontal: 60),
+              //margin: EdgeInsets.symmetric(horizontal: 60),
               alignment: Alignment.center,
               child: Column(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   SizedBox(
                     width: 300,
-                    height: 500,
+                    height: 250,
                     child: IconButton(
                       icon: Image.asset('assets/socialimage.png'),
-                      iconSize: 500,
+                      iconSize: 700,
                       onPressed: () {},
                     ),
                   ),
                   const SizedBox(
-                    height: 8,
-                  ),
-                  const SizedBox(
                     height: 10,
                   ),
-                  Image.asset('assets/image_comunidad.png'),
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      child: Image.asset('assets/image_comunidad.png')),
                   const SizedBox(
-                    height: 10,
+                    height: 50,
                   ),
                   _StartButton(),
                   const SizedBox(
-                    width: 25,
+                    width: 50,
                   )
                 ],
               ),
@@ -189,9 +278,9 @@ class _SocialScreenState extends State<SocialScreen>
               screen: SocialMediaHome());
         },
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          //width: 300,
           padding: EdgeInsets.symmetric(vertical: 15),
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(25)),
