@@ -1,14 +1,21 @@
 import 'dart:convert';
 
+import 'package:another_quickbooks/another_quickbooks.dart';
+import 'package:another_quickbooks/quickbook_models.dart';
+import 'package:cocreator/global/environment.dart';
 import 'package:cocreator/helpers/constants/error_handling.dart';
 import 'package:cocreator/helpers/constants/utils.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/models/balance.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/service/auth_quickbooks.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:cocreator/services/auth_service.dart';
 
 import 'package:http/http.dart' as http;
 
 import '../models/cashFlow.dart';
 
-class QuickbookService {
+class QuickbookService with ChangeNotifier {
   //CashFlow accounts connect!!
 
   String baseUrl = 'https://sandbox-quickbooks.api.intuit.com';
@@ -16,6 +23,71 @@ class QuickbookService {
       'https://sandbox-quickbooks.api.intuit.com/v3/company/4620816365271102750/reports/CashFlow?minorversion=65';
   String companyId = '4620816365271102750';
   String minorversion = '65';
+
+  Future<List<Balance>> getBalance({
+    required BuildContext context,
+  }) async {
+    //final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    List<Balance> balance = [];
+    try {
+      http.Response res = await http.get(
+          Uri.parse('${Environment.apiUrl}/usuarios/quickbooks/balance'),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-token': await AuthServices.getToken()
+          });
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            balance.add(
+              Balance.fromJson(
+                jsonEncode(
+                  jsonDecode(res.body)[i],
+                ),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return balance;
+  }
+
+  Future<Balance> getBalance2() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // var id = prefs.getInt('id');
+    // var token = prefs.getString('token');
+
+    var url = '${Environment.apiUrl}/usuarios/quickbooks/balance';
+    var headers = {
+      'Content-Type': 'application/json',
+      'x-token': await AuthServices.getToken()
+    };
+
+    var response = await http.get(
+      Uri.parse(url),
+      headers: headers,
+    );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      Balance balance = Balance.fromJson(data);
+
+      return balance;
+    } else {
+      print(response.body);
+      throw Exception('Failed');
+    }
+  }
 
   Future<List<CashFlow>> fetchCashFlow({
     required BuildContext context,
@@ -26,8 +98,8 @@ class QuickbookService {
     try {
       http.Response res = await http.get(Uri.parse(url), headers: {
         //'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": "Bearer "
-            'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..Y2NCLNo-3qfLUibPZHKimQ.BQ6YxsJN-azcMq068hJ84n_aihUgn5rbzyTqSIxn38whFO7KwwCdymwjT5rRZBeuXahEOZZdV0ZMauQpmuHXM4KOZEJINKpaJz-xgkg34-j2VVp22lxAfgzxRQXzpQiDkc2OZRlj7jEEpYulpr8iJe-XXQ1W6vAv3_alfP5C0jeFibR07QGRsarrZnoPfrEGEv7kpHWEKKWCF_qWWhyqzPj_rF83FVhnhfXQHiSuVDYmNYo2_chgYNRWVZK72vqyhUXnplV1s7GvTpz75LslTipzftcw6ZDXqOyaHyLxVFkcHLbLtkOIWCkAS7k4Gl1t15J71cUCdkx0U6mON3f9P_v8hMdgPEXZTsBPah5Q2Q8knTnrnxZuJQR4ZAdzNh7Zn4iwuhh0SJKnMNM7IYefQAct54D7O187mtIWF-BsGJpQXVLT8RXLWYaneWs3bNe0aqJh4KB8yE7r2GyTb3v50FmmRs-ZxEwi5cgVjrA1WMCbuVpJfFz4GfNa3PhdMfhUMk6V2hS1QJsCrCHpbmCBeudfQCC6vjENYvFB5pFEVpgdHTcMAH7OGAL5J5BqWiPLlBpr7kbZfLGEPqKxLTYRCfj9Mc8nqIrBHz6KoJ3AqZvdcWDHY-uv2toCO6LQV-gCS3BStpyYY4bYkY1fj9DoIf-jZqgjLoFMQkcg77xukaWLsrUVZ3RfKBlC-nxcpCdXMiV2EYhm6Zr-LEhhfBeh15xFfj4OnzvuKEGx6lupscZGrXAbKMCVstRBtINTpUd5.vp0ZWt90Rmfu1qdpCh4k_Q'
+        "Authorization":
+            'Bearer${await AuthQuickbookService.getQuickbooksToken()}'
       });
 
       httpErrorHandle(

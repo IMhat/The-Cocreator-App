@@ -13,12 +13,13 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: checkLoginState(context),
-          builder: (context, snapshot) {
-            return Center(
-              child: Text('Wait...'),
-            );
-          }),
+        future: checkLoginState(context),
+        builder: (context, snapshot) {
+          return Center(
+            child: Text('Wait...'),
+          );
+        },
+      ),
     );
   }
 
@@ -38,10 +39,13 @@ class LoadingPage extends StatelessWidget {
     // }
     if (autenticado) {
       // conectar al socket server
+
       socketService.connect();
       // Navigator.pushReplacementNamed(context, 'usuarios');
+      // ignore: use_build_context_synchronously
       navegarPagina(context, const Check());
     } else {
+      // ignore: use_build_context_synchronously
       navegarPagina(context, LoginPage());
     }
   }

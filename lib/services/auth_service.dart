@@ -10,82 +10,115 @@ import '../models/usuarios.dart';
 
 class AuthServices with ChangeNotifier {
   late Usuario usuario;
+
   bool _autenticando = false;
+
   final _storage = FlutterSecureStorage();
+
   bool get autenticando => _autenticando;
+
   set autenticando(bool valor) {
     _autenticando = valor;
     notifyListeners();
   }
 
-  //Getter toke staticos
+  // Getters del token de forma estática
   static Future<String> getToken() async {
-    final _storage = FlutterSecureStorage();
+    final _storage = new FlutterSecureStorage();
     final token = await _storage.read(key: 'token');
-    return token!;
+    return token.toString();
   }
 
   static Future<void> deleteToken() async {
-    final storage = FlutterSecureStorage();
-    await storage.delete(key: 'token');
+    final _storage = new FlutterSecureStorage();
+    await _storage.delete(key: 'token');
   }
 
   Future<bool> login(String email, String password) async {
-    autenticando = true;
+    this.autenticando = true;
 
     final data = {'email': email, 'password': password};
 
-    final res = await http.post(Uri.parse('${Environment.apiUrl}/login'),
+    final uri = Uri.parse('${Environment.apiUrl}/login');
+    final resp = await http.post(uri,
         body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
-    //print(res.body);
-    autenticando = false;
-    if (res.statusCode == 200) {
-      final loginRes = loginResponseFromJson(res.body);
-      usuario = loginRes.usuario;
-      await _guardarToken(loginRes.token);
+
+    this.autenticando = false;
+
+    if (resp.statusCode == 200) {
+      final loginResponse = loginResponseFromJson(resp.body);
+      this.usuario = loginResponse.usuario;
+
+      print(loginResponse.token.toString());
+
+      await this._guardarToken(loginResponse.token);
+
       return true;
     } else {
       return false;
     }
   }
 
-  Future register(String name, String email, String password) async {
-    autenticando = true;
+  Future register(String nombre, String email, String password) async {
+    this.autenticando = true;
 
-    final data = {'name': name, 'email': email, 'password': password};
+    final data = {'nombre': nombre, 'email': email, 'password': password};
 
-    final res = await http.post(Uri.parse('${Environment.apiUrl}/login/new'),
+    final uri = Uri.parse('${Environment.apiUrl}/login/new');
+    final resp = await http.post(uri,
         body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
-    //print(res.body);
-    autenticando = false;
-    if (res.statusCode == 200) {
-      final registerRes = loginResponseFromJson(res.body);
-      usuario = registerRes.usuario;
-      await _guardarToken(registerRes.token);
+
+    this.autenticando = false;
+
+    if (resp.statusCode == 200) {
+      final loginResponse = loginResponseFromJson(resp.body);
+      this.usuario = loginResponse.usuario;
+      await this._guardarToken(loginResponse.token);
+
       return true;
     } else {
-      final resBody = jsonDecode(res.body);
-      return resBody['msg'];
+      final respBody = jsonDecode(resp.body);
+      print(respBody);
+      return respBody['msg'] == null ? 'Error interno' : respBody['msg'];
     }
   }
 
+  // Future<bool> isLoggedIn() async {
+  //   //TODO verificar bien esto
+  //   var token = await _storage.read(key: 'token');
+
+  //   if (token == null) {
+  //     token = 'asdsd';
+  //   }
+
+  //   final res = await http.get(Uri.parse('${Environment.apiUrl}/login/renew'),
+  //       headers: {'Content-Type': 'application/json', 'x-token': token});
+
+  //   //print(res.body);
+  //   autenticando = false;
+  //   if (res.statusCode == 200) {
+  //     final registerRes = loginResponseFromJson(res.body);
+  //     usuario = registerRes.usuario;
+  //     await _guardarToken(registerRes.token);
+  //     return true;
+  //   } else {
+  //     logOut();
+  //     return false;
+  //   }
+  // }
+
   Future<bool> isLoggedIn() async {
-    //TODO verificar bien esto
-    var token = await _storage.read(key: 'token');
+    final token = await _storage.read(key: 'token') ?? '';
 
-    if (token == null) {
-      token = 'asdsd';
-    }
-
-    final res = await http.get(Uri.parse('${Environment.apiUrl}/login/renew'),
+    final uri = Uri.parse('${Environment.apiUrl}/login/renew');
+    final resp = await http.get(uri,
         headers: {'Content-Type': 'application/json', 'x-token': token});
 
-    //print(res.body);
-    autenticando = false;
-    if (res.statusCode == 200) {
-      final registerRes = loginResponseFromJson(res.body);
-      usuario = registerRes.usuario;
-      await _guardarToken(registerRes.token);
+    if (resp.statusCode == 200) {
+      final loginResponse = loginResponseFromJson(resp.body);
+      usuario = loginResponse.usuario;
+      await _guardarToken(loginResponse.token);
+
       return true;
     } else {
       logOut();

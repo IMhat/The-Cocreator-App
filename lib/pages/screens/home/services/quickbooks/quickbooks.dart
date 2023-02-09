@@ -3,9 +3,15 @@ import 'package:another_quickbooks/quickbook_models.dart';
 import 'package:cocreator/helpers/widgets/loader.dart';
 import 'package:cocreator/pages/screens/hakim/screens/speech_screen.dart';
 import 'package:cocreator/pages/screens/home/home_screen.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/models/balance.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/service/auth_quickbooks.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/service/quickbooks_apiCall.dart';
+import 'package:cocreator/pages/screens/home/services/quickbooks/widgets/balance.dart';
 import 'package:cocreator/widgets/FloatHakeem.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +29,8 @@ class QuickbooksScreen extends StatefulWidget {
 }
 
 class _QuickbooksScreenState extends State<QuickbooksScreen> {
+  final _storage2 = FlutterSecureStorage();
+
   late final WebViewController controller;
 
   final String applicationId = "7a0a57b2-a22a-4da2-90c4-b6415bf865c0";
@@ -42,24 +50,30 @@ class _QuickbooksScreenState extends State<QuickbooksScreen> {
 
   QuickbooksClient? quickClient;
   String authUrl = "";
+  //TokenResponse? token;
+
   TokenResponse? token;
 
-  // temporary list
-  // List<CashFlow>? cash;
+  // late Balance balance;
 
-  // final QuickbookService quickbookServices = QuickbookService();
-
-  // void fetchWallet() async {
-  //   cash = await quickbookServices.fetchCashFlow(context: context);
-  //   setState(() {});
-  // }
+  // final QuickbookService quickbooksServices = QuickbookService();
 
   void initState() {
     print("Init Called");
     initializeQuickbooks();
 
-    //fetchWallet();
+    //getAsync();
   }
+
+  // getAsync() async {
+  //   try {
+  //     balance = await QuickbookService().getBalance();
+  //   } catch (e) {
+  //     print(e);
+  //   }
+
+  //   if (mounted) setState(() {});
+  // }
 
   ///
   /// Initialize Quickbooks Client
@@ -82,10 +96,19 @@ class _QuickbooksScreenState extends State<QuickbooksScreen> {
 
   Future<void> requestAccessToken(String code, String realmId) async {
     this.realmId = realmId;
+
     token = await quickClient!
         .getAuthToken(code: code, redirectUrl: redirectUrl, realmId: realmId);
+    // token = await quickClient!
+    //     .getAuthToken(code: code, redirectUrl: redirectUrl, realmId: realmId);
+
+    await _guardarQuickbooksToken(token.toString());
 
     setState(() {});
+  }
+
+  Future _guardarQuickbooksToken(String token) async {
+    return await _storage2.write(key: 'quickbooksToken', value: token);
   }
 
   Widget _webViewLoader() {
@@ -149,61 +172,172 @@ class _QuickbooksScreenState extends State<QuickbooksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int counter = 16;
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Text(widget.title),
-        // ),
+        appBar: AppBar(
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  size: 35,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+          shadowColor: Colors.black,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: SizedBox(width: 180, child: (Image.asset('assets/logo3.png'))),
+          // title: Row(
+          //   children: [
+          //     SizedBox(
+          //       width: 80,
+          //     ),
+          //     SizedBox(
+          //       child: Container(
+          //         child: Text(
+          //           "Cocreator",
+          //           style: TextStyle(
+          //               fontSize: 30,
+          //               fontWeight: FontWeight.w600,
+          //               color: Colors.black),
+          //         ),
+          //       ),
+          //     ),
+          //     SizedBox(
+          //       width: 100,
+          //     ),
+          //     SizedBox(
+          //       child: Container(
+          //         alignment: Alignment.centerLeft,
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(8.0),
+          //           child: Icon(
+          //             Icons.notifications,
+          //             color: Colors.black,
+          //             size: 30,
+          //           ),
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    //     stops: [
+                    //   0.2,
+                    //   0.4,
+                    // ],
+                    colors: [
+                  Color.fromARGB(255, 143, 200, 241),
+                  // Color.fromARGB(255, 94, 129, 253),
+                  Color.fromARGB(255, 70, 106, 234)
+                ])),
+          ),
+          actions: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  // padding: EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.only(top: 1, bottom: 0, right: 5),
+                  child: IconButton(
+                      icon: Icon(
+                        Icons.notifications_outlined,
+                        color: Colors.white,
+                        size: 35,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          counter = 1;
+                        });
+                      }),
+                ),
+                counter != 0
+                    ? Positioned(
+                        right: 11,
+                        top: 11,
+                        child: Container(
+                          padding: EdgeInsets.all(2),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 14,
+                            minHeight: 14,
+                          ),
+                          child: Text(
+                            '$counter',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+          ],
+        ),
         body: Container(
           child: token == null
               // ? WebViewWidget(controller: controller)
               ? _webView()
               : Container(
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          //     stops: [
+                          //   0.2,
+                          //   0.4,
+                          // ],
+                          colors: [
+                        Color.fromARGB(255, 143, 200, 241),
+                        // Color.fromARGB(255, 94, 129, 253),
+                        Color.fromARGB(255, 70, 106, 234)
+                      ])),
                   child: Stack(children: <Widget>[
-                  Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: SingleChildScrollView(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                            const SizedBox(height: 100),
-                            const SizedBox(
-                              child: Text(
-                                'Authenticated with quickbooks',
-                                style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 27, 27, 27)),
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: SingleChildScrollView(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                              const SizedBox(height: 50),
+                              const BalanceQuickbooks(),
+                              const SizedBox(height: 100),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                child: ElevatedButton(
+                                    child: const Text("Desconect"),
+                                    onPressed: () => {
+                                          //AuthQuickbookService().logOut(),
+                                          PersistentNavBarNavigator
+                                              .pushNewScreen(context,
+                                                  screen: HomeScreen()),
+                                        }),
                               ),
-                            ),
-                            const SizedBox(
-                              child: Text(
-                                'Token de acceso, del usuario para consultar info a quickbooks',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 27, 27, 27)),
-                              ),
-                            ),
-                            const SizedBox(height: 100),
-                            SizedBox(child: Text(token.toString())),
-                            const SizedBox(height: 10),
-                            SizedBox(
-                              child: ElevatedButton(
-                                child: const Text("Desconect"),
-                                onPressed: () =>
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                        context,
-                                        screen: HomeScreen()),
-                              ),
-                            ),
-                          ]))),
-                ])),
+                            ]))),
+                  ])),
         ),
         floatingActionButton: FloatingActionButton.extended(
             elevation: 5.0,
             onPressed: () {
-              print(token);
+              //print(balance);
+              //getAsync();
               PersistentNavBarNavigator.pushNewScreen(context,
                   withNavBar: false,
                   screen: SpeechScreen(),
