@@ -288,6 +288,24 @@ class __FormState extends State<_Form> {
                           context, 'Wrong registration', registroOk.toString());
                     }
                   })
+        // ? null
+        // : () async {
+        //     print(nameCtrl.text);
+        //     print(emailCtrl.text);
+        //     print(passCtrl.text);
+        //     final registroOk = await authService.register(
+        //         nameCtrl.text.trim(),
+        //         emailCtrl.text.trim(),
+        //         passCtrl.text.trim());
+        //     if (registroOk == true) {
+        //       // Conectamos el servidor de sockets
+        //       socketService.connect();
+        //       navegarPagina(context, Check());
+        //     } else {
+        //       mostrarAlerta(
+        //           context, 'Wrong registration', registroOk.toString());
+        //     }
+        //   })
       ]),
     );
   }

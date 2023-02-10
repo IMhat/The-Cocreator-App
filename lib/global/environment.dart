@@ -9,8 +9,8 @@ class Environment {
   // static String socketUrl = 'http://192.168.5.122:3000';
   // static String apiUrl = 'http://192.168.5.122:3000/api';
 
-  static String socketUrl = 'https://lumbar-enthusiastic-egg.glitch.me';
-  static String apiUrl = 'https://lumbar-enthusiastic-egg.glitch.me/api';
+  static String socketUrl = 'https://fallacious-notch-astronomy.glitch.me';
+  static String apiUrl = 'https://fallacious-notch-astronomy.glitch.me/api';
 
   // static String apiUrl = 'http://192.168.5.122:3000/api';
   // static String socketUrl = 'http://192.168.5.122:3000';
