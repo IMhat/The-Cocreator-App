@@ -266,6 +266,7 @@ class __FormState extends State<_Form> {
           textController: passCtrl,
           isPassword: true,
         ),
+
         _termsOfService(),
         BotonAzul(
             text: 'Sign up',

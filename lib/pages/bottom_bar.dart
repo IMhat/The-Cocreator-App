@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'screens/socialmedia/home/home_screen_social.dart';
 import 'screens/socialmedia/socialmedia.dart';
 import 'screens/cashflow/cash_flow_screen.dart';
 import 'screens/hakim/screens/speech_screen.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/socialmedia/home/pages/home.dart';
+import 'screens/socialmedia/home/pages/profile.dart';
 import 'screens/home/services/quickbooks/quickbooks.dart';
 import 'screens/profile/profile_screen.dart';
 
@@ -55,11 +58,13 @@ class _BottomBarState extends State<BottomBar> {
     List<Widget> _buildScreens() {
       return [
         const HomeScreen(),
+        // HomeScreenSocial(),
         const SocialScreen(),
         //const SocialScreen(),
         const CashFlowScreen(),
         UsuariosPage(),
-        const ProfileScreen()
+        Profile()
+        // const ProfileScreen()
       ];
     }
 

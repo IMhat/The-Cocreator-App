@@ -1,3 +1,6 @@
+import 'package:cocreator/pages/screens/socialmedia/blog/add_blog_screen.dart';
+import 'package:cocreator/pages/screens/socialmedia/home/home_screen_social.dart';
+import 'package:cocreator/pages/screens/socialmedia/home/pages/home.dart';
 import 'package:cocreator/pages/screens/socialmedia/widgets/picker_channel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -181,54 +184,127 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
         ],
       ),
       body: Container(
+        //height: 700,
         color: Colors.white,
-        child: SafeArea(
-            child: Column(children: [
-          const SizedBox(
-            height: 10,
-          ),
-          _title(),
-          const SizedBox(
-            width: 55,
-          ),
-          _textChannel(),
-          Container(
-            height: 50,
-            //width: 50,
-            child: Expanded(
-              child: PickerChannel(pickerItems: channelModes),
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _title(),
+                  const SizedBox(
+                    width: 55,
+                  ),
+                  _textChannel(),
+                  Container(
+                    height: 50,
+                    //width: 50,
+                    child: Expanded(
+                      child: PickerChannel(pickerItems: channelModes),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _TextUsers(),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  Container(
+                    height: 120,
+                    //width: 50,
+                    child: Expanded(
+                      child: UserCard(),
+                    ),
+                  ),
+                  _textPost(),
+                  Container(
+                    height: 5000,
+                    child: HomeScreenSocial(),
+                  ),
+                  // SizedBox(
+                  //   height: 1000,
+                  // )
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          _TextUsers(),
-          const SizedBox(
-            width: 25,
-          ),
-          Container(
-            height: 120,
-            //width: 50,
-            child: Expanded(
-              child: UserCard(),
-            ),
-          ),
-          _textPost()
-        ])),
+          ],
+        ),
+
+        // body: Container(
+        //   height: 700,
+        //   color: Colors.white,
+        //   child: SingleChildScrollView(
+        //     child: SafeArea(
+        //         child: Column(children: [
+        //       const SizedBox(
+        //         height: 10,
+        //       ),
+        //       _title(),
+        //       const SizedBox(
+        //         width: 55,
+        //       ),
+        //       _textChannel(),
+        //       Container(
+        //         height: 50,
+        //         //width: 50,
+        //         child: Expanded(
+        //           child: PickerChannel(pickerItems: channelModes),
+        //         ),
+        //       ),
+        //       const SizedBox(
+        //         height: 20,
+        //       ),
+        //       _TextUsers(),
+        //       const SizedBox(
+        //         width: 25,
+        //       ),
+        //       Container(
+        //         height: 120,
+        //         //width: 50,
+        //         child: Expanded(
+        //           child: UserCard(),
+        //         ),
+        //       ),
+        //       _textPost(),
+        //       Container(
+        //         child: Expanded(child: HomeScreenSocial()),
+        //       )
+        //     ])),
+        //   ),
+        // ),
+        // floatingActionButton: FloatingActionButton.extended(
+        //     elevation: 5.0,
+        //     onPressed: () {
+        //       PersistentNavBarNavigator.pushNewScreen(context,
+        //           withNavBar: false,
+        //           screen: SpeechScreen(),
+        //           pageTransitionAnimation: PageTransitionAnimation.slideUp);
+        //     },
+        //     label: Text(
+        //       'Hakim',
+        //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+        //     ),
+        //     icon: FloatIaIcon()));
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //     elevation: 5.0,
-      //     onPressed: () {
-      //       PersistentNavBarNavigator.pushNewScreen(context,
-      //           withNavBar: false,
-      //           screen: SpeechScreen(),
-      //           pageTransitionAnimation: PageTransitionAnimation.slideUp);
-      //     },
-      //     label: Text(
-      //       'Hakim',
-      //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-      //     ),
-      //     icon: FloatIaIcon()));
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        onPressed: () {
+          //Get.to(const AddBlogScreen());
+          PersistentNavBarNavigator.pushNewScreen(context,
+              withNavBar: false,
+              screen: AddBlogScreen(),
+              pageTransitionAnimation: PageTransitionAnimation.slideUp);
+        },
+        child: const Text(
+          '+',
+          style: TextStyle(fontSize: 40),
+        ),
+      ),
     );
   }
 
