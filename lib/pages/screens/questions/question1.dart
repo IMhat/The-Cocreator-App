@@ -4,7 +4,7 @@ import 'package:cocreator/pages/screens/questions/widgets/small_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:alan_voice/alan_voice.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../hakim/controllers/tts.dart';
@@ -31,18 +31,20 @@ class _Question1ScreenState extends State<Question1Screen> {
   }
 
   _Question1ScreenState() {
-    AlanVoice.addButton("0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+    AlanVoice.addButton(
+        "0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage",
+        buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
 
     AlanVoice.onButtonState.add((state) {
       if (state.name == "ONLINE" && !_greetingIsPlayed) {
         _greetingIsPlayed = true;
         AlanVoice.activate();
-        AlanVoice.playText("Next, select a financial services account, this will help you better manage your income and expenses, as well as keep in touch with your financial service. We do not use any information you have provided");
+        AlanVoice.playText(
+            "Next, select a financial services account, this will help you better manage your income and expenses, as well as keep in touch with your financial service. We do not use any information you have provided");
       }
-      
-       });
-  //@override
-  //void initState() {
+    });
+    //@override
+    //void initState() {
     //super.initState();
     //talk();
   }
@@ -82,7 +84,13 @@ class _Question1ScreenState extends State<Question1Screen> {
                   height: 35,
                 ),
 
-                Image.asset('assets/logo2.png'),
+                Text('Cocreator',
+                    style: GoogleFonts.redRose(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                //Image.asset('assets/logo2.png'),
+
                 // Container(
                 //     height: 40,
                 //     width: 550,
@@ -96,7 +104,7 @@ class _Question1ScreenState extends State<Question1Screen> {
 
                 IconButton(
                   icon: Image.asset('assets/image.png'),
-                  iconSize: 80,
+                  iconSize: 50,
                   onPressed: () {},
                 ),
                 const SizedBox(

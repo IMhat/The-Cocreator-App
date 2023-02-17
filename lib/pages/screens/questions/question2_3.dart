@@ -35,7 +35,9 @@ class _Question2_3ScreenState extends State<Question2_3Screen> {
   }
 
   _Question2_3ScreenState() {
-    AlanVoice.addButton("0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+    AlanVoice.addButton(
+        "0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage",
+        buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
 
     AlanVoice.onButtonState.add((state) {
       if (state.name == "ONLINE" && !_greetingIsPlayed) {
@@ -43,10 +45,9 @@ class _Question2_3ScreenState extends State<Question2_3Screen> {
         AlanVoice.activate();
         AlanVoice.playText("What type of profile do you have in your company?");
       }
-      
-       });
-  //@override
-  //void initState() {
+    });
+    //@override
+    //void initState() {
     //super.initState();
     //talk();
   }
@@ -75,7 +76,7 @@ class _Question2_3ScreenState extends State<Question2_3Screen> {
         key: _businessQuestion2FormKey,
         children: <Widget>[
           Text("What's Your role in the company",
-              style: GoogleFonts.poppins(color: Colors.white, fontSize: 20)),
+              style: GoogleFonts.poppins(color: Colors.white, fontSize: 18)),
           const SizedBox(
             height: 25,
           ),
@@ -230,12 +231,17 @@ class _Question2_3ScreenState extends State<Question2_3Screen> {
                 const SizedBox(
                   height: 35,
                 ),
+                Text('Cocreator',
+                    style: GoogleFonts.redRose(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
 
-                Image.asset('assets/logo2.png'),
+                // Image.asset('assets/logo2.png'),
 
                 IconButton(
                   icon: Image.asset('assets/image.png'),
-                  iconSize: 80,
+                  iconSize: 50,
                   onPressed: () {},
                 ),
 
@@ -243,15 +249,22 @@ class _Question2_3ScreenState extends State<Question2_3Screen> {
                   height: 10,
                   width: 350,
                 ),
-                SizedBox(
+                const Text(
+                  'Set up about your bussiness',
+                  style: TextStyle(
+                      fontFamily: '.SF UI Text',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                /*SizedBox(
                     child: Align(
-                  alignment: Alignment.center,
-                  child: SmallText(
-                    text: '  Set up about your bussiness',
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                )),
+                        alignment: Alignment.center,
+                        child: SmallText(
+                          text: '  Set up about your bussiness',
+                          size: 20,
+                          color: Colors.white,
+                        ))),
                 // ACA HAY QUE CARGAR LAS PREGUNTAS BAJADAS DE LA API REST--------------------------------------
                 // const SizedBox(
                 //   child: Questions(),
@@ -260,6 +273,7 @@ class _Question2_3ScreenState extends State<Question2_3Screen> {
                   height: 20,
                   width: 350,
                 ),
+                */
                 _businessQuestion1(),
 
                 //----------------------------------------------------------------------

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:alan_voice/alan_voice.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../hakim/controllers/tts.dart';
 import 'widgets/big_text_black.dart';
 import 'widgets/button_gradient.dart';
@@ -80,12 +80,16 @@ class _Question2ScreenState extends State<Question2Screen> {
                 const SizedBox(
                   height: 35,
                 ),
-
-                Image.asset('assets/logo2.png'),
+                Text('Cocreator',
+                    style: GoogleFonts.redRose(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                //Image.asset('assets/logo2.png'),
 
                 IconButton(
                   icon: Image.asset('assets/image.png'),
-                  iconSize: 80,
+                  iconSize: 50,
                   onPressed: () {},
                 ),
 

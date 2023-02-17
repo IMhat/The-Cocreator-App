@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cocreator/models/usuarios.dart';
 import 'package:cocreator/models/mensajes_response.dart';
 import 'package:cocreator/pages/chat_page.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:cocreator/services/auth_service.dart';
 import 'package:cocreator/services/socket_service.dart';
 import 'package:cocreator/services/usuarios_service.dart';
@@ -22,6 +22,7 @@ class UserCard extends StatefulWidget {
 class _UserCardState extends State<UserCard> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  bool _isFollowing = false;
 
   final usarioServices = UsuarioService();
   List<Usuario> usuarios = [];
@@ -30,6 +31,12 @@ class _UserCardState extends State<UserCard> {
   void initState() {
     _cargarUsuarioCard();
     super.initState();
+  }
+
+  void _toggleFollow() {
+    setState(() {
+      _isFollowing = !_isFollowing;
+    });
   }
 
   @override
@@ -102,21 +109,25 @@ class _UserCardState extends State<UserCard> {
             //   isSelected: false,
             // ),
             child: Container(
+              height: 90,
+              width: 250,
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 09),
               decoration: BoxDecoration(
-                // color: Color(0xff04385f),
                 color: Colors.white,
-                border: Border.all(color: Color.fromARGB(255, 0, 0, 0)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(14),
+                    topRight: Radius.circular(14),
+                    bottomLeft: Radius.circular(18),
+                    bottomRight: Radius.circular(18)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 6,
+                    blurRadius: 9,
+                    offset: Offset(0, 2), // changes position of shadow
                   ),
                 ],
-                borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
               child: Row(
                 children: [
@@ -138,7 +149,7 @@ class _UserCardState extends State<UserCard> {
                           Container(
                             margin: EdgeInsets.only(left: 10, top: 0),
                             child: CircleAvatar(
-                              radius: 35,
+                              radius: 25,
                               child: Text(usuarios[index].name.substring(0, 2)),
                             ),
                           ),
@@ -155,7 +166,7 @@ class _UserCardState extends State<UserCard> {
                                   child: Text(
                                     usuarios[index].name.toString(),
                                     style: const TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 14,
                                         color: Color.fromARGB(255, 7, 0, 0),
                                         fontWeight: FontWeight.bold),
                                     maxLines: 3,
@@ -169,11 +180,15 @@ class _UserCardState extends State<UserCard> {
                                     //height: 35,
                                     child: Text(
                                       '@${usuarios[index].name.toString()}',
-                                      style: const TextStyle(
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          color: const Color.fromARGB(
+                                              255, 151, 151, 151)),
+                                      /*const TextStyle(
                                           fontSize: 15,
                                           color: Color.fromARGB(
                                               255, 151, 151, 151),
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold),*/
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -187,31 +202,34 @@ class _UserCardState extends State<UserCard> {
                                   child: Row(
                                     children: [
                                       SizedBox(
+                                          width: 60,
                                           child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            side: const BorderSide(
-                                                width: 2, // the thickness
-                                                color: Colors
-                                                    .blue // the color of the border
-                                                )),
-                                        onPressed: () {},
-                                        child: Icon(
-                                          Icons.add,
-                                          color: Colors.blue,
-                                        ),
-                                      )),
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.white,
+                                                side: const BorderSide(
+                                                    width: 2, // the thickness
+                                                    color: Colors
+                                                        .blue // the color of the border
+                                                    )),
+                                            onPressed: () {},
+                                            child: Icon(
+                                              Icons.add,
+                                              color: Colors.blue,
+                                            ),
+                                          )),
                                       SizedBox(
                                         width: 20,
                                       ),
                                       SizedBox(
-                                          width: 100,
+                                          width: 85,
                                           child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: _toggleFollow,
                                             child: Text(
-                                              'Follow',
+                                              _isFollowing
+                                                  ? 'Followed'
+                                                  : 'Follow',
                                               style: const TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 12,
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold),
                                             ),

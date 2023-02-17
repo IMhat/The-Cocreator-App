@@ -18,7 +18,7 @@ class _OnboardingIaScreenState extends State<OnboardingIaScreen> {
   // class OnboardingIaScreen extends StatelessWidget {
   // static const String routeName = '/iaScreen';
   // const OnboardingIaScreen({Key? key}) : super(key: key);
-bool _greetingIsPlayed = false;
+  bool _greetingIsPlayed = false;
 
   void _storeOnboardInfo() async {
     print("Shared pref called");
@@ -27,19 +27,22 @@ bool _greetingIsPlayed = false;
     await prefs.setInt('onBoard', isViewed);
     print(prefs.getInt('onBoard'));
   }
-_OnboardingIaScreenState() {
-    AlanVoice.addButton("0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+
+  _OnboardingIaScreenState() {
+    AlanVoice.addButton(
+        "0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage",
+        buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
 
     AlanVoice.onButtonState.add((state) {
       if (state.name == "ONLINE" && !_greetingIsPlayed) {
         _greetingIsPlayed = true;
         AlanVoice.activate();
-        AlanVoice.playText("hi, my name is hakim, and cocreator is an application that helps you manage your business");
+        AlanVoice.playText(
+            "hi, my name is hakim, and cocreator is an application that helps you manage your business");
       }
-      
-       });
-  //@override
-  //void initState() {
+    });
+    //@override
+    //void initState() {
     //super.initState();
     //talk();
   }
@@ -156,7 +159,7 @@ _OnboardingIaScreenState() {
                             );
                             //context.go('/OnboardingIa');
                           },
-                          text: 'Repeat',
+                          text: 'Repeat ↺',
                         ),
                       ),
                       // const SizedBox(
@@ -264,4 +267,4 @@ _OnboardingIaScreenState() {
 
 
 // Color(0xffFD0745),
-//                     Color(0xff6D49C2)
+//                     Color(0xff6D49C2)i

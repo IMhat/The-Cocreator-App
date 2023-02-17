@@ -7,6 +7,7 @@ import 'package:cocreator/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home';
@@ -27,10 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.symmetric(vertical: 15),
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           alignment: Alignment.center,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(25)),
               // boxShadow: <BoxShadow>[
               //   BoxShadow(
@@ -48,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ])),
           child: Text(
             'Connect accounts',
-            style: TextStyle(fontSize: 20, color: Colors.white),
+            style: /*TextStyle(fontSize: 20, color: Colors.white)*/
+                GoogleFonts.poppins(fontSize: 14, color: Colors.white),
           ),
         ));
   }
@@ -68,13 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               //padding: EdgeInsets.symmetric(vertical: 10),
               margin: EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.topLeft,
               child: Column(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   const Text('Recent transaction',
+                      textAlign: TextAlign.left,
                       style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 24,
+                          fontFamily: '.SF UI Text',
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 27, 27, 27))),
                   const SizedBox(
@@ -84,10 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 25),
                         child: Text('There are not transactions yet.',
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 63, 63, 63))
+                            /*TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
-                                color: Color.fromARGB(255, 63, 63, 63)))),
+                                color: Color.fromARGB(255, 63, 63, 63))*/
+                            )),
                   ),
                   const SizedBox(
                     height: 15,
@@ -125,9 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.symmetric(vertical: 10),
               margin: EdgeInsets.symmetric(horizontal: 25),
               alignment: Alignment.centerLeft,
-              child: Text('My balance',
+              child: const Text('My balance',
                   style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 24,
+                      fontFamily: '.SF UI Text',
                       fontWeight: FontWeight.w900,
                       color: Color.fromARGB(255, 27, 27, 27))),
             ),
@@ -137,10 +147,15 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.centerLeft,
               child: Text(
                   'connect your accounts to see the evolution of your business',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(193, 0, 0, 0))
+                  /*TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 63, 63, 63))),
+                      color: Color.fromARGB(255, 63, 63, 63))*/
+                  ),
             ),
             const SizedBox(
               child: Accounts(),
@@ -382,18 +397,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         // 'Hi Guest',
                         'Hello ',
-                        style: const TextStyle(
-                            fontSize: 20,
+                        style: GoogleFonts.poppins(
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
+
+                        /*TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),*/
                       ),
                       Text(
                         '${nombreUsuario} !',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
+                        style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
                       ),
                       SizedBox(
                         width: 5,

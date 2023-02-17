@@ -70,19 +70,19 @@ class _AccountsState extends State<Accounts> {
                                 const BorderRadius.all(Radius.circular(8)),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey[850]!.withOpacity(0.29),
+                                color: Colors.grey[850]!.withOpacity(0.0),
                                 offset: const Offset(-10, 10),
-                                blurRadius: 10,
+                                blurRadius: 9,
                               )
                             ]),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(5.0),
                           child: Row(
                             children: [
-                              Container(
+                              SizedBox(
                                 height: 55,
                                 child: Image.network(accounts![index].image,
-                                    fit: BoxFit.cover, width: 75),
+                                    fit: BoxFit.cover, width: 60),
                               ),
                               const SizedBox(
                                 width: 5,
@@ -90,24 +90,24 @@ class _AccountsState extends State<Accounts> {
                               Center(
                                 child: Text(
                                   accounts![index].title,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 25),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                               SizedBox(
                                   child: Container(
-                                padding: const EdgeInsets.all(4.0),
+                                padding: const EdgeInsets.all(2.0),
                                 child: isItemSelected
                                     ? const Icon(
                                         Icons.circle_outlined,
-                                        size: 35,
+                                        size: 25,
                                         color: Colors.blue,
                                       )
                                     : const Icon(
                                         Icons.circle_outlined,
-                                        size: 35,
+                                        size: 25,
                                         color:
                                             Color.fromARGB(255, 197, 197, 197),
                                       ),

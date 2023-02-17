@@ -63,7 +63,7 @@ class _BottomBarState extends State<BottomBar> {
         //const SocialScreen(),
         const CashFlowScreen(),
         UsuariosPage(),
-        Profile()
+        const Profile()
         // const ProfileScreen()
       ];
     }
@@ -71,9 +71,9 @@ class _BottomBarState extends State<BottomBar> {
     List<PersistentBottomNavBarItem> _navBarsItems() {
       return [
         PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.home),
+          icon: Icon(Icons.home_outlined),
           title: ("Home"),
-          activeColorPrimary: CupertinoColors.activeBlue,
+          activeColorPrimary: Color(0xFF000000),
           inactiveColorPrimary: CupertinoColors.systemGrey,
 
           // routeAndNavigatorSettings: RouteAndNavigatorSettings(
@@ -89,25 +89,25 @@ class _BottomBarState extends State<BottomBar> {
           //     radius: 55, backgroundImage: AssetImage('assets/image.png')),
           icon: Icon(CupertinoIcons.person_3_fill),
           title: ("Comunity"),
-          activeColorPrimary: CupertinoColors.activeBlue,
+          activeColorPrimary: Color.fromARGB(255, 0, 0, 0),
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.chart_bar_alt_fill),
+          icon: Icon(Icons.insert_chart_outlined_outlined),
           title: ("CashFlow"),
-          activeColorPrimary: CupertinoColors.activeBlue,
+          activeColorPrimary: Color.fromARGB(255, 0, 0, 0),
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.chat_bubble_text_fill),
+          icon: Icon(Icons.chat_bubble_outline),
           title: ("Chat"),
-          activeColorPrimary: CupertinoColors.activeBlue,
+          activeColorPrimary: Color.fromARGB(255, 0, 0, 0),
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.profile_circled),
+          icon: Icon(Icons.account_circle_outlined),
           title: ("Profile"),
-          activeColorPrimary: CupertinoColors.activeBlue,
+          activeColorPrimary: Color.fromARGB(255, 0, 0, 0),
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
       ];

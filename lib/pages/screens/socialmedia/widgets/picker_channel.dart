@@ -11,7 +11,7 @@ class PickerItem {
 class PickerChannel extends StatefulWidget {
   final List<PickerItem> pickerItems;
 
-  PickerChannel({
+  const PickerChannel({
     Key? key,
     required this.pickerItems,
   }) : super(key: key);
@@ -40,6 +40,22 @@ class _PickerChannelState extends State<PickerChannel> {
             alignment: Alignment.center,
             margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
             decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            /*BoxDecoration(
               // color: Color(0xff04385f),
               color: Colors.white,
               border: Border.all(color: Color.fromARGB(255, 0, 0, 0)),
@@ -52,7 +68,7 @@ class _PickerChannelState extends State<PickerChannel> {
                 ),
               ],
               borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
+            ),*/
             child: Container(
               // padding: const EdgeInsets.all(8.0),
 

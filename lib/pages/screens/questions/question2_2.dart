@@ -35,7 +35,9 @@ class _Question2_2ScreenState extends State<Question2_2Screen> {
   }
 
   _Question2_2ScreenState() {
-    AlanVoice.addButton("0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage", buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
+    AlanVoice.addButton(
+        "0079af61506bf21083d402240619a0a82e956eca572e1d8b807a3e2338fdd0dc/stage",
+        buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
 
     AlanVoice.onButtonState.add((state) {
       if (state.name == "ONLINE" && !_greetingIsPlayed) {
@@ -43,10 +45,9 @@ class _Question2_2ScreenState extends State<Question2_2Screen> {
         AlanVoice.activate();
         AlanVoice.playText("Answer questions about your business");
       }
-      
-       });
-  //@override
-  //void initState() {
+    });
+    //@override
+    //void initState() {
     //super.initState();
     //talk();
   }
@@ -206,12 +207,16 @@ class _Question2_2ScreenState extends State<Question2_2Screen> {
                 const SizedBox(
                   height: 40,
                 ),
-
-                Image.asset('assets/logo2.png'),
+                Text('Cocreator',
+                    style: GoogleFonts.redRose(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                // Image.asset('assets/logo2.png'),
 
                 IconButton(
                   icon: Image.asset('assets/image.png'),
-                  iconSize: 80,
+                  iconSize: 50,
                   onPressed: () {},
                 ),
 

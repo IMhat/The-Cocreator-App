@@ -314,8 +314,8 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
         child: SizedBox(
           child: Text('Community',
               style: const TextStyle(
-                  fontSize: 33,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black)),
         ));
   }
@@ -340,7 +340,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
           children: [
             const Text('Channel',
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 151, 151, 151))),
             const Text('View all',
@@ -376,7 +376,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
           children: [
             const Text('Users',
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 151, 151, 151))),
             const Text('View all',
@@ -411,7 +411,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
           children: [
             const Text('New posts',
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 151, 151, 151))),
           ],

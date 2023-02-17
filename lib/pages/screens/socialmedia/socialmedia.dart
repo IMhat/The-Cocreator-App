@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cocreator/pages/screens/cashflow/expense.dart';
 import 'package:cocreator/pages/screens/hakim/screens/speech_screen.dart';
 import 'package:cocreator/widgets/FloatHakeem.dart';
@@ -5,6 +7,7 @@ import 'package:cocreator/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'socialhome.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SocialScreen extends StatefulWidget {
   static const String routeName = '/socialmedia';
@@ -57,6 +60,7 @@ class _SocialScreenState extends State<SocialScreen>
             );
           },
         ),
+
         //shadowColor: Colors.black,
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -105,7 +109,7 @@ class _SocialScreenState extends State<SocialScreen>
                 // padding: EdgeInsets.all(8.0),
                 margin: const EdgeInsets.only(top: 1, bottom: 0, right: 5),
                 child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.notifications_outlined,
                       color: Colors.black,
                       size: 35,
@@ -121,18 +125,18 @@ class _SocialScreenState extends State<SocialScreen>
                       right: 11,
                       top: 11,
                       child: Container(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         decoration: new BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        constraints: BoxConstraints(
+                        constraints: const BoxConstraints(
                           minWidth: 14,
                           minHeight: 14,
                         ),
                         child: Text(
                           '$counter',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 8,
                           ),
@@ -146,15 +150,16 @@ class _SocialScreenState extends State<SocialScreen>
         ],
       ),
       body: SingleChildScrollView(
-        child: SafeArea(
+        child: Container(
+          color: Colors.white,
           child: Column(
             children: [
               const SizedBox(
-                height: 50,
+                height: 03,
               ),
               _TextBody(),
               const SizedBox(
-                height: 10,
+                height: 02,
               ),
               _ImageBody(),
               const SizedBox(
@@ -185,7 +190,7 @@ class _SocialScreenState extends State<SocialScreen>
         width: 335,
         //height: 93,
         //margin: EdgeInsets.symmetric(vertical: 20),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
@@ -194,7 +199,7 @@ class _SocialScreenState extends State<SocialScreen>
           children: <Widget>[
             Container(
               //padding: EdgeInsets.symmetric(vertical: 10),
-              margin: EdgeInsets.only(left: 40),
+              margin: const EdgeInsets.only(left: 40),
               //margin: EdgeInsets.only(top: 50),
               //alignment: Alignment.center,
               child: Column(
@@ -202,16 +207,18 @@ class _SocialScreenState extends State<SocialScreen>
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text('Welcome',
+                    child: const Text('Welcome',
                         style: TextStyle(
+                            fontFamily: '.SF UI Text',
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 50, 174, 245))),
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text('to the Community',
+                    child: const Text('to the Community',
                         style: TextStyle(
+                            fontFamily: '.SF UI Text',
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 50, 174, 245))),
@@ -228,7 +235,7 @@ class _SocialScreenState extends State<SocialScreen>
         width: 335,
         //height: 350,
         //margin: EdgeInsets.symmetric(vertical: 20),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
@@ -243,8 +250,8 @@ class _SocialScreenState extends State<SocialScreen>
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   SizedBox(
-                    width: 300,
-                    height: 250,
+                    width: 306,
+                    height: 306,
                     child: IconButton(
                       icon: Image.asset('assets/socialimage.png'),
                       iconSize: 700,
@@ -255,7 +262,7 @@ class _SocialScreenState extends State<SocialScreen>
                     height: 10,
                   ),
                   Container(
-                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      margin: const EdgeInsets.symmetric(horizontal: 50),
                       child: Image.asset('assets/image_comunidad.png')),
                   const SizedBox(
                     height: 50,
@@ -275,14 +282,14 @@ class _SocialScreenState extends State<SocialScreen>
     return InkWell(
         onTap: () {
           PersistentNavBarNavigator.pushNewScreen(context,
-              screen: SocialMediaHome());
+              screen: const SocialMediaHome());
         },
         child: Container(
           //width: 300,
-          padding: EdgeInsets.symmetric(vertical: 15),
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.center,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(25)),
               // boxShadow: <BoxShadow>[
               //   BoxShadow(
@@ -300,7 +307,10 @@ class _SocialScreenState extends State<SocialScreen>
                   ])),
           child: Text(
             'Start',
-            style: TextStyle(fontSize: 20, color: Colors.white),
+            style: GoogleFonts.poppins(
+                fontSize: 20,
+                color: Colors
+                    .white) /*TextStyle(fontSize: 20, color: Colors.white)*/,
           ),
         ));
   }
