@@ -109,23 +109,23 @@ class _UserCardState extends State<UserCard> {
             //   isSelected: false,
             // ),
             child: Container(
-              height: 120,
+              height: 140,
               //width: 200,
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 09),
+              margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(14),
-                    topRight: Radius.circular(14),
-                    bottomLeft: Radius.circular(18),
-                    bottomRight: Radius.circular(18)),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 6,
-                    blurRadius: 9,
-                    offset: Offset(0, 2), // changes position of shadow
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 7,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
@@ -152,17 +152,27 @@ class _UserCardState extends State<UserCard> {
                               Column(
                                 children: [
                                   SizedBox(
-                                    //width: 235,
-                                    height: 30,
-                                    child: Text(
-                                      usuarios[index].name.toString(),
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Color.fromARGB(255, 7, 0, 0),
-                                          fontWeight: FontWeight.bold),
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: SizedBox(
+                                      //width: 235,
+                                      //height: 30,
+                                      child: Text(
+                                        usuarios[index].name.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Color.fromARGB(255, 7, 0, 0),
+                                            fontWeight: FontWeight.bold),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
                                   ),
                                   Container(
                                     margin:
@@ -185,6 +195,9 @@ class _UserCardState extends State<UserCard> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
                                   ),
                                   Container(
                                     //argin: EdgeInsets.symmetric(horizontal: 10),
@@ -241,38 +254,50 @@ class _UserCardState extends State<UserCard> {
                       Row(
                         children: [
                           Container(
-                            //margin: EdgeInsets.only(right: 10, top: 10),
+                            margin: EdgeInsets.only(right: 5),
                             child: Column(
                               children: [
                                 // SizedBox(
                                 //   height: 10,
                                 // ),
                                 Container(
-                                  //argin: EdgeInsets.symmetric(horizontal: 10),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 5),
                                   child: Row(
                                     children: [
-                                      SizedBox(
-                                          //width: 60,
-                                          child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            side: const BorderSide(
-                                                width: 2, // the thickness
-                                                color: Colors
-                                                    .blue // the color of the border
-                                                )),
-                                        onPressed: () {},
-                                        child: Icon(
-                                          Icons.add,
-                                          color: Colors.blue,
-                                        ),
-                                      )),
-                                      SizedBox(
-                                        width: 10,
+                                      Stack(
+                                        children: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                fixedSize: Size(30, 36),
+                                                minimumSize: Size(20, 36),
+                                                backgroundColor: Colors.white,
+                                                side: const BorderSide(
+                                                    width: 2, // the thickness
+                                                    color: Colors
+                                                        .blue // the color of the border
+                                                    )),
+                                            onPressed: () {},
+                                            child: Container(),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 12, vertical: 12),
+                                            child: Icon(
+                                              Icons.add,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       SizedBox(
-                                          width: 85,
-                                          child: ElevatedButton(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                          width: 150,
+                                          margin: EdgeInsets.only(right: 5),
+                                          child: Expanded(
+                                              child: ElevatedButton(
                                             onPressed: _toggleFollow,
                                             child: Text(
                                               _isFollowing
@@ -283,7 +308,7 @@ class _UserCardState extends State<UserCard> {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold),
                                             ),
-                                          )),
+                                          ))),
                                     ],
                                   ),
                                 ),

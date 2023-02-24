@@ -211,11 +211,12 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
                     height: 10,
                   ),
                   _TextUsers(),
-                  const SizedBox(
-                    width: 25,
-                  ),
+                  // const SizedBox(
+                  //   width: 25,
+                  // ),
                   Container(
-                    height: 120,
+                    //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    height: 140,
                     //width: 50,
                     child: Expanded(
                       child: UserCard(),
@@ -347,7 +348,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
             const Text('View all',
                 style: TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                     color: Colors.blue)),
 
             //CardChannel(),
@@ -368,7 +369,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
       ),
 
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: EdgeInsets.only(top: 22, bottom: 5),
         margin: EdgeInsets.symmetric(horizontal: 25),
         alignment: Alignment.topCenter,
         child: Row(
@@ -383,7 +384,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
             const Text('View all',
                 style: TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                     color: Colors.blue)),
           ],
         ),

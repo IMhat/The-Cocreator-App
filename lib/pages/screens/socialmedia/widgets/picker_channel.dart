@@ -38,7 +38,7 @@ class _PickerChannelState extends State<PickerChannel> {
           child: Container(
             height: 100,
             alignment: Alignment.center,
-            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -48,7 +48,7 @@ class _PickerChannelState extends State<PickerChannel> {
                   bottomRight: Radius.circular(10)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withOpacity(0.3),
                   spreadRadius: 5,
                   blurRadius: 7,
                   offset: Offset(0, 3), // changes position of shadow
@@ -82,8 +82,8 @@ class _PickerChannelState extends State<PickerChannel> {
                         pickerItem.label,
                         style: const TextStyle(
                             fontFamily: 'Sans',
-                            color: Color.fromARGB(255, 148, 148, 148),
-                            fontSize: 15,
+                            color: Colors.black,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
