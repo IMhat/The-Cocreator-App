@@ -197,7 +197,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
                   ),
                   _title(),
                   const SizedBox(
-                    width: 55,
+                    width: 15,
                   ),
                   _textChannel(),
                   Container(
@@ -208,7 +208,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   _TextUsers(),
                   const SizedBox(
@@ -310,6 +310,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
 
   Widget _title() {
     return Container(
+        margin: EdgeInsets.only(bottom: 10, top: 10),
         alignment: Alignment.topCenter,
         child: SizedBox(
           child: Text('Community',
@@ -331,7 +332,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
       ),
 
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: EdgeInsets.symmetric(vertical: 5),
         margin: EdgeInsets.symmetric(horizontal: 25),
         alignment: Alignment.topCenter,
         child: Row(
