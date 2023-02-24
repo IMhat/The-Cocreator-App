@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(
                   Icons.menu,
                   color: Colors.white,
-                  size: 35,
+                  size: 24,
                 ),
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
@@ -249,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
           shadowColor: Colors.black,
           backgroundColor: Colors.white,
           centerTitle: true,
-          title: SizedBox(width: 180, child: (Image.asset('assets/logo3.png'))),
+          title: SizedBox(width: 120, child: (Image.asset('assets/logo3.png'))),
           // title: Row(
           //   children: [
           //     SizedBox(
@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(
                         Icons.notifications_outlined,
                         color: Colors.white,
-                        size: 35,
+                        size: 24,
                       ),
                       onPressed: () {
                         setState(() {

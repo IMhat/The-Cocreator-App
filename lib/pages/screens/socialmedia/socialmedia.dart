@@ -51,7 +51,7 @@ class _SocialScreenState extends State<SocialScreen>
               icon: const Icon(
                 Icons.menu,
                 color: Colors.black,
-                size: 35,
+                size: 24,
               ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -64,7 +64,7 @@ class _SocialScreenState extends State<SocialScreen>
         //shadowColor: Colors.black,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: SizedBox(width: 180, child: (Image.asset('assets/logo.png'))),
+        title: SizedBox(width: 120, child: (Image.asset('assets/logo.png'))),
         // title: Row(
         //   children: [
         //     SizedBox(
@@ -112,7 +112,7 @@ class _SocialScreenState extends State<SocialScreen>
                     icon: const Icon(
                       Icons.notifications_outlined,
                       color: Colors.black,
-                      size: 35,
+                      size: 24,
                     ),
                     onPressed: () {
                       setState(() {

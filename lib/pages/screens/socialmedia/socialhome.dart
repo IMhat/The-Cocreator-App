@@ -86,7 +86,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
               icon: const Icon(
                 Icons.menu,
                 color: Colors.black,
-                size: 35,
+                size: 24,
               ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -98,7 +98,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
         //shadowColor: Colors.black,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: SizedBox(width: 130, child: (Image.asset('assets/logo.png'))),
+        title: SizedBox(width: 120, child: (Image.asset('assets/logo.png'))),
         // title: Row(
         //   children: [
         //     SizedBox(
@@ -146,7 +146,7 @@ class _SocialMediaHomeState extends State<SocialMediaHome>
                     icon: Icon(
                       Icons.notifications_outlined,
                       color: Colors.black,
-                      size: 35,
+                      size: 24,
                     ),
                     onPressed: () {
                       setState(() {
