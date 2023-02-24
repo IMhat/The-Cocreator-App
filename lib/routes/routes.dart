@@ -33,7 +33,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'question1': (_) => Question1Screen(),
   'question2': (_) => Question2Screen(),
   'question2_2': (_) => Question2_2Screen(),
-  'question2_3': (_) => Question2_3Screen(),
+  // 'question2_3': (_) => Question2_3Screen(),
   //hakim
   'hakim': (_) => SpeechScreen(),
   'iaScreen': (_) => IaScreen(),

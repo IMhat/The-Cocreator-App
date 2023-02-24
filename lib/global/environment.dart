@@ -6,11 +6,12 @@ class Environment {
   // static String puerto = '3000';
   // static String socketUrl = 'http://' + ip + ':' + puerto;
   // static String apiUrl = socketUrl + '/api';
+
   // static String socketUrl = 'http://192.168.5.122:3000';
   // static String apiUrl = 'http://192.168.5.122:3000/api';
 
-  static String socketUrl = 'https://zesty-tiny-receipt.glitch.me';
-  static String apiUrl = 'https://zesty-tiny-receipt.glitch.me/api';
+  static String socketUrl = 'https://inky-torch-trombone.glitch.me';
+  static String apiUrl = 'https://inky-torch-trombone.glitch.me/api';
 
   // static String apiUrl = 'http://192.168.5.122:3000/api';
   // static String socketUrl = 'http://192.168.5.122:3000';

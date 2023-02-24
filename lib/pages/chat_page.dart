@@ -36,7 +36,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     authServices = Provider.of<AuthServices>(context, listen: false);
     socketService.socket.on('mensaje-personal', _escucharMsg);
 
-    _cargarHistorial(chatService.usuarioPara.uid);
+    _cargarHistorial(chatService.usuarioPara.uid!);
   }
 
   void _cargarHistorial(String usuarioId) async {
@@ -180,7 +180,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
     final newMessage = new ChatMessage(
         texto: texto,
-        uid: authServices.usuario.uid,
+        uid: authServices.usuario.uid!,
         animationController: AnimationController(
             vsync: this, duration: Duration(milliseconds: 200)));
     _messages.insert(0, newMessage);

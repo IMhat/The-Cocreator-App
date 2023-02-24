@@ -10,6 +10,7 @@ class Home extends StatelessWidget {
       backgroundColor: Color(0xffEEEEFF),
       body: SingleChildScrollView(
         child: BlogsList(
+          // url: '/blogPost/getAllBlogs',
           url: '/blogPost/getOtherBlogs',
         ),
       ),

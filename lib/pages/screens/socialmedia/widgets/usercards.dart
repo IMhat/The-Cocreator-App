@@ -109,8 +109,8 @@ class _UserCardState extends State<UserCard> {
             //   isSelected: false,
             // ),
             child: Container(
-              height: 90,
-              width: 250,
+              height: 120,
+              //width: 200,
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 09),
               decoration: BoxDecoration(
@@ -136,6 +136,79 @@ class _UserCardState extends State<UserCard> {
                     children: [
                       Row(
                         children: [
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10, top: 0),
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  child: Text(
+                                      usuarios[index].name.substring(0, 2)),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    //width: 235,
+                                    height: 30,
+                                    child: Text(
+                                      usuarios[index].name.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color.fromARGB(255, 7, 0, 0),
+                                          fontWeight: FontWeight.bold),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: SizedBox(
+                                      //width: 235,
+                                      //height: 35,
+                                      child: Text(
+                                        '@${usuarios[index].name.toString()}',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            color: const Color.fromARGB(
+                                                255, 151, 151, 151)),
+                                        /*const TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromARGB(
+                                              255, 151, 151, 151),
+                                          fontWeight: FontWeight.bold),*/
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    //argin: EdgeInsets.symmetric(horizontal: 10),
+                                    child: SizedBox(
+                                      //width: 235,
+                                      //height: 35,
+                                      child: Text(
+                                        '${usuarios[index].businessName.toString()} ${usuarios[index].roles.toString()}',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 15, color: Colors.blue),
+                                        /*const TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromARGB(
+                                              255, 151, 151, 151),
+                                          fontWeight: FontWeight.bold),*/
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                           // Container(
                           //   padding: const EdgeInsets.only(top: 5),
                           //   width: 10,
@@ -146,79 +219,56 @@ class _UserCardState extends State<UserCard> {
                           //           color: const Color.fromARGB(255, 255, 251, 251)),
                           //       borderRadius: BorderRadius.circular(50)),
                           // ),
+
+                          // SizedBox(
+                          //     child: Container(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: isItemSelected
+                          //       ? const Icon(
+                          //           Icons.circle_outlined,
+                          //           size: 35,
+                          //           color: Colors.blue,
+                          //         )
+                          //       : const Icon(
+                          //           Icons.circle_outlined,
+                          //           size: 35,
+                          //           color: Color.fromARGB(
+                          //               255, 197, 197, 197),
+                          //         ),
+                          // )),
+                        ],
+                      ),
+                      Row(
+                        children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10, top: 0),
-                            child: CircleAvatar(
-                              radius: 25,
-                              child: Text(usuarios[index].name.substring(0, 2)),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(right: 10, top: 10),
+                            //margin: EdgeInsets.only(right: 10, top: 10),
                             child: Column(
                               children: [
-                                SizedBox(
-                                  //width: 235,
-                                  height: 30,
-                                  child: Text(
-                                    usuarios[index].name.toString(),
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Color.fromARGB(255, 7, 0, 0),
-                                        fontWeight: FontWeight.bold),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Container(
-                                  //argin: EdgeInsets.symmetric(horizontal: 10),
-                                  child: SizedBox(
-                                    //width: 235,
-                                    //height: 35,
-                                    child: Text(
-                                      '@${usuarios[index].name.toString()}',
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          color: const Color.fromARGB(
-                                              255, 151, 151, 151)),
-                                      /*const TextStyle(
-                                          fontSize: 15,
-                                          color: Color.fromARGB(
-                                              255, 151, 151, 151),
-                                          fontWeight: FontWeight.bold),*/
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
                                 Container(
                                   //argin: EdgeInsets.symmetric(horizontal: 10),
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                          width: 60,
+                                          //width: 60,
                                           child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.white,
-                                                side: const BorderSide(
-                                                    width: 2, // the thickness
-                                                    color: Colors
-                                                        .blue // the color of the border
-                                                    )),
-                                            onPressed: () {},
-                                            child: Icon(
-                                              Icons.add,
-                                              color: Colors.blue,
-                                            ),
-                                          )),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            side: const BorderSide(
+                                                width: 2, // the thickness
+                                                color: Colors
+                                                    .blue // the color of the border
+                                                )),
+                                        onPressed: () {},
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.blue,
+                                        ),
+                                      )),
                                       SizedBox(
-                                        width: 20,
+                                        width: 10,
                                       ),
                                       SizedBox(
                                           width: 85,
@@ -240,25 +290,8 @@ class _UserCardState extends State<UserCard> {
                               ],
                             ),
                           ),
-
-                          // SizedBox(
-                          //     child: Container(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: isItemSelected
-                          //       ? const Icon(
-                          //           Icons.circle_outlined,
-                          //           size: 35,
-                          //           color: Colors.blue,
-                          //         )
-                          //       : const Icon(
-                          //           Icons.circle_outlined,
-                          //           size: 35,
-                          //           color: Color.fromARGB(
-                          //               255, 197, 197, 197),
-                          //         ),
-                          // )),
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ],

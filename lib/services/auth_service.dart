@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:cocreator/global/environment.dart';
+
 import 'package:cocreator/models/login_response.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -74,6 +76,39 @@ class AuthServices with ChangeNotifier {
       final loginResponse = loginResponseFromJson(resp.body);
       this.usuario = loginResponse.usuario;
       await this._guardarToken(loginResponse.token);
+
+      return true;
+    } else {
+      final respBody = jsonDecode(resp.body);
+      print(respBody);
+      return respBody['msg'] == null ? 'Error interno' : respBody['msg'];
+    }
+  }
+
+  Future updateUser(
+      String business, String name, String employees, String roles) async {
+    // this.autenticando = true;
+
+    final data = {
+      'business': business,
+      'businessName': name,
+      'employees': employees,
+      'roles': roles
+    };
+
+    final uri = Uri.parse('${Environment.apiUrl}/login/update');
+    final resp = await http.post(uri, body: jsonEncode(data), headers: {
+      'Content-Type': 'application/json',
+      'x-token': await AuthServices.getToken()
+    });
+
+    // this.autenticando = false;
+    print(resp.statusCode);
+
+    if (resp.statusCode == 200) {
+      // final loginResponse = loginResponseFromJson(resp.body);
+      // usuario = loginResponse.usuario;
+      //final respBody = jsonDecode(resp.body);
 
       return true;
     } else {

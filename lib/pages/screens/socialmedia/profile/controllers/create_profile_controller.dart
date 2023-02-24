@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cocreator/pages/bottom_bar.dart';
 import 'package:cocreator/pages/screens/socialmedia/enums/snackbar_message.dart';
 import 'package:cocreator/helpers/my_file_picker.dart';
 import 'package:cocreator/pages/screens/socialmedia/home/home_screen_social.dart';
@@ -84,7 +85,7 @@ class CreateProfileController extends GetxController {
         '/profile/add/image', imageFile.value!.path);
     if (response.statusCode == 200 || response.statusCode == 201) {
       loading(false);
-      Get.offAll(() => const SocialMediaHome());
+      Get.offAll(() => const BottomBar());
       showSnackbar(SnackbarMessage.success, 'Profile Updated Successfully');
     } else if (response.statusCode == 500) {
       loading(false);

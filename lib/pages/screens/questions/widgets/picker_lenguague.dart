@@ -30,7 +30,9 @@ class _PickerWidgetState extends State<PickerWidget> {
     return ListView.builder(
       itemBuilder: (context, index) {
         PickerItem pickerItem = widget.pickerItems[index];
+
         bool isItemSelected = index == selectedIndex;
+
         return InkWell(
           onTap: () {
             selectedIndex = index;
